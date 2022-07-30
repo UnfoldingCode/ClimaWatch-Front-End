@@ -22,7 +22,11 @@ async function fetch_weather() {
       let feels_like = data.main.feels_like;
       let temp_min = data.main.temp_min;
       let temp_max = data.main.temp_max;
-      console.log(icon, description, temp, feels_like, temp_min, temp_max);
+      if (data.weather[0].id == 800) {
+        weather_info.setAttribute("class", "_800");
+      } else if (data.weather[0].id >= 200 && data.weather[0].id <= 232) {
+        weather_info.setAttribute("class", "_200S");
+      }
       let location = document.createElement("p");
       location.setAttribute("class", "tenpx");
       location.innerText = `${data.name}, ${data.sys.country}`;

@@ -3,11 +3,22 @@ header {
 }
 
 .twentypx{
+  
   padding: 20px;
   color: azure;
 }
 
 .tenpx{
+  margin: 10px;
   padding: 20px;
-  color: black;
+  
+}
+
+._800{
+  background-image: url("./img/clearSky.jpg");
+  color: azure;
+}
+._200S{
+  background-image: url("./img/thunder.jpg");
+  color: azure;
 }
