@@ -22,10 +22,15 @@ async function fetch_weather() {
       let feels_like = data.main.feels_like;
       let temp_min = data.main.temp_min;
       let temp_max = data.main.temp_max;
+
       if (data.weather[0].id == 800) {
         weather_info.setAttribute("class", "_800");
-      } else if (data.weather[0].id >= 200 && data.weather[0].id <= 232) {
-        weather_info.setAttribute("class", "_200S");
+      } else if (data.weather[0].id >= 300 && data.weather[0].id <= 321) {
+        weather_info.setAttribute("class", "_300S");
+      } else if (data.weather[0].id >= 500 && data.weather[0].id <= 531) {
+        weather_info.setAttribute("class", "_500S");
+      } else {
+        weather_info.setAttribute("class", "none");
       }
       let location = document.createElement("p");
       location.setAttribute("class", "tenpx");

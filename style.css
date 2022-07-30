@@ -11,7 +11,7 @@ header {
 .tenpx{
   margin: 10px;
   padding: 20px;
-  
+  /* color: rgba(255, 255, 255, 0.903); */
 }
 
 ._800{
@@ -21,4 +21,20 @@ header {
 ._200S{
   background-image: url("./img/thunder.jpg");
   color: azure;
+}
+
+._300S {
+  background-image: url("./img/drizzle.jpg");
+  color: azure;
+}
+
+._500S {
+  background-image: url("./img/rain.jpg");
+  color: azure;
+
+}
+
+none{
+  background-image: url("");
+  
 }
