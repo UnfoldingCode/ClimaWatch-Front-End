@@ -23,6 +23,10 @@ async function fetch_weather() {
       let temp_min = data.main.temp_min;
       let temp_max = data.main.temp_max;
       console.log(icon, description, temp, feels_like, temp_min, temp_max);
+      let location = document.createElement("p");
+      location.setAttribute("class", "tenpx");
+      location.innerText = `${data.name}, ${data.sys.country}`;
+      weather_info.appendChild(location);
       let weather_icon = document.createElement("img");
       weather_icon.setAttribute(
         "src",
@@ -30,12 +34,31 @@ async function fetch_weather() {
       );
       weather_info.appendChild(weather_icon);
       let weather_description = document.createElement("span");
+      weather_description.setAttribute("class", "tenpx");
       weather_description.innerText = description;
       weather_info.appendChild(weather_description);
       let temp_current = document.createElement("span");
-      temp_current.setAttribute("style", "padding:10px");
-      temp_current.innerText = `${temp} \u00B0c`;
+      temp_current.setAttribute("class", "tenpx");
+      temp_current.innerText = `${temp}\u00B0c`;
       weather_info.appendChild(temp_current);
+      let min_max = document.createElement("div");
+      let realFeel = document.createElement("span");
+      realFeel.setAttribute("class", "tenpx");
+      realFeel.innerText = `Feels like ${feels_like}\u00B0c`;
+      min_max.appendChild(realFeel);
+      let minTemp = document.createElement("span");
+      minTemp.setAttribute("class", "tenpx");
+      minTemp.innerText = `Min Temperature: ${temp_min}\u00B0c`;
+      min_max.appendChild(minTemp);
+      let maxTemp = document.createElement("span");
+      maxTemp.setAttribute("class", "tenpx");
+      maxTemp.innerText = `Max Temperature: ${temp_max}\u00B0c`;
+      min_max.appendChild(maxTemp);
+      let humidity_ = document.createElement("span");
+      humidity_.setAttribute("class", "tenpx");
+      humidity_.innerText = `Humidity: ${data.main.humidity}%`;
+      min_max.appendChild(humidity_);
+      weather_info.appendChild(min_max);
     }
   } catch {}
 }

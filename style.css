@@ -1,0 +1,13 @@
+header {
+  background-image: url("img/climate.jpeg");
+}
+
+.twentypx{
+  padding: 20px;
+  color: azure;
+}
+
+.tenpx{
+  padding: 20px;
+  color: black;
+}
