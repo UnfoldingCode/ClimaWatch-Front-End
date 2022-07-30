@@ -29,6 +29,9 @@ async function fetch_weather() {
         `http://openweathermap.org/img/wn/${icon}@2x.png`
       );
       weather_info.appendChild(weather_icon);
+      let weather_description = document.createElement("span");
+      weather_description.innerText = description;
+      weather_info.appendChild(weather_description);
       let temp_current = document.createElement("span");
       temp_current.innerText = temp;
       weather_info.appendChild(temp_current);
