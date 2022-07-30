@@ -10,6 +10,8 @@ search_button.addEventListener("click", fetch_weather);
 
 async function fetch_weather() {
   try {
+    let weather_info = document.querySelector("#weather_info");
+    weather_info.innerHTML = "";
     let res = await fetch(api);
     console.log(res);
     let data = await res.json();
@@ -21,6 +23,15 @@ async function fetch_weather() {
       let temp_min = data.main.temp_min;
       let temp_max = data.main.temp_max;
       console.log(icon, description, temp, feels_like, temp_min, temp_max);
+      let weather_icon = document.createElement("img");
+      weather_icon.setAttribute(
+        "src",
+        `http://openweathermap.org/img/wn/${icon}@2x.png`
+      );
+      weather_info.appendChild(weather_icon);
+      let temp_current = document.createElement("span");
+      temp_current.innerText = temp;
+      weather_info.appendChild(temp_current);
     }
   } catch {}
 }
