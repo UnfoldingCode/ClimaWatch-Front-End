@@ -9,8 +9,18 @@ search_button.addEventListener("click", () => {
 search_button.addEventListener("click", fetch_weather);
 
 async function fetch_weather() {
-  let res = await fetch(api);
-  console.log(res);
-  let data = await res.json();
-  console.log(data.sys.country);
+  try {
+    let res = await fetch(api);
+    console.log(res);
+    let data = await res.json();
+    if (res.status == 200) {
+      let icon = data.weather[0].icon;
+      let description = data.weather[0].description;
+      let temp = data.main.temp;
+      let feels_like = data.main.feels_like;
+      let temp_min = data.main.temp_min;
+      let temp_max = data.main.temp_max;
+      console.log(icon, description, temp, feels_like, temp_min, temp_max);
+    }
+  } catch {}
 }
