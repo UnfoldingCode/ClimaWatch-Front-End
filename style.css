@@ -34,6 +34,12 @@ header {
 
 }
 
+._600S {
+  background-image: url("./img/snow.jpg");
+  color: red;
+
+}
+
 none{
   background-image: url("");
   

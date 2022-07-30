@@ -29,6 +29,8 @@ async function fetch_weather() {
         weather_info.setAttribute("class", "_300S");
       } else if (data.weather[0].id >= 500 && data.weather[0].id <= 531) {
         weather_info.setAttribute("class", "_500S");
+      } else if (data.weather[0].id >= 600 && data.weather[0].id <= 622) {
+        weather_info.setAttribute("class", "_600S");
       } else {
         weather_info.setAttribute("class", "none");
       }
