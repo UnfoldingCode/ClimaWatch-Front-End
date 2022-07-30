@@ -33,7 +33,8 @@ async function fetch_weather() {
       weather_description.innerText = description;
       weather_info.appendChild(weather_description);
       let temp_current = document.createElement("span");
-      temp_current.innerText = temp;
+      temp_current.setAttribute("style", "padding:10px");
+      temp_current.innerText = `${temp} \u00B0c`;
       weather_info.appendChild(temp_current);
     }
   } catch {}
