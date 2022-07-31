@@ -1,5 +1,6 @@
 let search_button = document.querySelector("#search_button");
 let location_button = document.querySelector("#my_location");
+let weather_info = document.querySelector("#weather_info");
 let api;
 
 //****************************            clock             *********************************/
@@ -37,6 +38,9 @@ currentTime();
 //***    https://www.w3schools.com/html/html5_geolocation.asp    */
 
 location_button.addEventListener("click", () => {
+  weather_info.innerHTML = "";
+  document.querySelector("#city").value = "";
+  displayLoading();
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(showPosition);
   } else {
@@ -52,20 +56,46 @@ function showPosition(position) {
 }
 //****** Using HTML Geolocation - The getCurrentPosition() method is used to return the user's position.    */
 
+//********* Loader *************/
+
+let loader = document.querySelector("#loading");
+
+function displayLoading() {
+  loader.classList.add("display");
+  // to stop loading after some time
+  setTimeout(() => {
+    loader.classList.remove("display");
+  }, 5000);
+  console.log("loader");
+}
+
+//hide loading
+function hideLoading() {
+  loader.classList.remove("display");
+  console.log("unLoader");
+}
+
+//********* Loader *************/
+
 search_button.addEventListener("click", () => {
+  displayLoading();
   let city = document.querySelector("#city").value;
   api = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=e572668bb21fee7042efec77137cc15c`;
 });
 
 search_button.addEventListener("click", fetch_weather);
+// search_button.addEventListener("click", () => {
+//   fetch_weather();
+// });
 
 async function fetch_weather() {
   try {
-    let weather_info = document.querySelector("#weather_info");
     weather_info.innerHTML = "";
     let res = await fetch(api);
     console.log(res);
     let data = await res.json();
+    hideLoading();
+    document.querySelector("#city").value = "";
     if (res.status == 200) {
       let icon = data.weather[0].icon;
       let description = data.weather[0].description;
@@ -86,6 +116,8 @@ async function fetch_weather() {
         weather_info.setAttribute("class", "_600S");
       } else if (data.weather[0].id >= 701 && data.weather[0].id <= 781) {
         weather_info.setAttribute("class", "_700S");
+      } else if (data.weather[0].id >= 801 && data.weather[0].id <= 804) {
+        weather_info.setAttribute("class", "_800S");
       } else {
         weather_info.setAttribute("class", "none");
       }
