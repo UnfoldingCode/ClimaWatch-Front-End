@@ -1,7 +1,24 @@
 let search_button = document.querySelector("#search_button");
 let location_button = document.querySelector("#my_location");
 let weather_info = document.querySelector("#weather_info");
+let inputBox = document.querySelector("#city");
 let api;
+
+//****************************            When hit Enter            *********************************/
+// inputBox.addEventListener("keyup", (e) => {
+//   if (e.key == "Enter") {
+//     e.preventDefault();
+//     console.log("ENTER");
+//     // requestApi(inputBox.value);
+//   }
+// });
+
+// function requestApi(inputVal) {
+//   api = `https://api.openweathermap.org/data/2.5/weather?q=${inputVal}&units=metric&appid=e572668bb21fee7042efec77137cc15c
+// `;
+//   fetch_weather();
+// }
+//****************************            When hit Enter            *********************************/
 
 //****************************            clock             *********************************/
 function currentTime() {
