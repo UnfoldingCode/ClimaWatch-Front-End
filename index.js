@@ -2,7 +2,7 @@ let search_button = document.querySelector("#search_button");
 let location_button = document.querySelector("#my_location");
 let api;
 
-//************************************************************clock */
+//****************************            clock             *********************************/
 function currentTime() {
   let date = new Date();
   let hh = date.getHours();
@@ -31,14 +31,16 @@ function currentTime() {
 }
 
 currentTime();
-//************************************************************clock */
+//****************************            clock             *********************************/
 
-//*******************************************Using HTML Geolocation - The getCurrentPosition() method is used to return the user's position. */
+//****** Using HTML Geolocation - The getCurrentPosition() method is used to return the user's position.    */
+//***    https://www.w3schools.com/html/html5_geolocation.asp    */
+
 location_button.addEventListener("click", () => {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(showPosition);
   } else {
-    alert("Your browser not support geolocation api");
+    alert("Geolocation is not supported by this browser.");
   }
 });
 
@@ -48,7 +50,7 @@ function showPosition(position) {
 `;
   fetch_weather();
 }
-//*******************************************Using HTML Geolocation - The getCurrentPosition() method is used to return the user's position. */
+//****** Using HTML Geolocation - The getCurrentPosition() method is used to return the user's position.    */
 
 search_button.addEventListener("click", () => {
   let city = document.querySelector("#city").value;
