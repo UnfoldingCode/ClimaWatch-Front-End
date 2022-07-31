@@ -1,5 +1,23 @@
 let search_button = document.querySelector("#search_button");
+let location_button = document.querySelector("#my_location");
 let api;
+
+//*******************************************Using HTML Geolocation - The getCurrentPosition() method is used to return the user's position. */
+location_button.addEventListener("click", () => {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  } else {
+    alert("Your browser not support geolocation api");
+  }
+});
+
+function showPosition(position) {
+  const { latitude, longitude } = position.coords;
+  api = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&appid=e572668bb21fee7042efec77137cc15c
+`;
+  fetch_weather();
+}
+//*******************************************Using HTML Geolocation - The getCurrentPosition() method is used to return the user's position. */
 
 search_button.addEventListener("click", () => {
   let city = document.querySelector("#city").value;
@@ -25,12 +43,16 @@ async function fetch_weather() {
 
       if (data.weather[0].id == 800) {
         weather_info.setAttribute("class", "_800");
+      } else if (data.weather[0].id >= 200 && data.weather[0].id <= 232) {
+        weather_info.setAttribute("class", "_200S");
       } else if (data.weather[0].id >= 300 && data.weather[0].id <= 321) {
         weather_info.setAttribute("class", "_300S");
       } else if (data.weather[0].id >= 500 && data.weather[0].id <= 531) {
         weather_info.setAttribute("class", "_500S");
       } else if (data.weather[0].id >= 600 && data.weather[0].id <= 622) {
         weather_info.setAttribute("class", "_600S");
+      } else if (data.weather[0].id >= 701 && data.weather[0].id <= 781) {
+        weather_info.setAttribute("class", "_700S");
       } else {
         weather_info.setAttribute("class", "none");
       }

@@ -39,6 +39,11 @@ header {
   color: red;
 
 }
+._700S {
+  background-image: url("./img/atmosphere.jpg");
+  color: azure;
+
+}
 
 none{
   background-image: url("");
