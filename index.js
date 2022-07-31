@@ -142,20 +142,30 @@ async function fetch_weather() {
       location.setAttribute("class", "tenpx");
       location.innerText = `${data.name}, ${data.sys.country}`;
       weather_info.appendChild(location);
+
+      let weather_description = document.createElement("span");
+      weather_description.setAttribute("class", "tenpx");
+      weather_description.innerText = description;
+      location.appendChild(weather_description);
+      let temp_current = document.createElement("span");
+      temp_current.setAttribute("class", "tenpx");
+      temp_current.innerText = `${temp}\u00B0c`;
+      location.appendChild(temp_current);
+
       let weather_icon = document.createElement("img");
       weather_icon.setAttribute(
         "src",
         `http://openweathermap.org/img/wn/${icon}@2x.png`
       );
       weather_info.appendChild(weather_icon);
-      let weather_description = document.createElement("span");
-      weather_description.setAttribute("class", "tenpx");
-      weather_description.innerText = description;
-      weather_info.appendChild(weather_description);
-      let temp_current = document.createElement("span");
-      temp_current.setAttribute("class", "tenpx");
-      temp_current.innerText = `${temp}\u00B0c`;
-      weather_info.appendChild(temp_current);
+      // let weather_description = document.createElement("span");
+      // weather_description.setAttribute("class", "tenpx");
+      // weather_description.innerText = description;
+      // weather_info.appendChild(weather_description);
+      // let temp_current = document.createElement("span");
+      // temp_current.setAttribute("class", "tenpx");
+      // temp_current.innerText = `${temp}\u00B0c`;
+      // weather_info.appendChild(temp_current);
       let min_max = document.createElement("div");
       let realFeel = document.createElement("span");
       realFeel.setAttribute("class", "tenpx");
