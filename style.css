@@ -1,5 +1,39 @@
+html{
+background: url("./img/snow.jpg");
+}
+
 header {
   background-image: url("img/climate.jpeg");
+}
+
+#clock{
+  padding: 20px;
+  color:yellow
+}
+
+#loading{
+  width: 2rem;
+  height: 2rem;
+  border: 5px solid #f3f3f3;
+  border-top: 6px solid #9c41f2;
+  border-radius: 100%;
+  margin: auto;
+  visibility: hidden;
+  animation: spin 1s infinite linear;
+}
+
+#loading.display{
+  visibility: visible;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .twentypx{
@@ -37,6 +71,17 @@ header {
 ._600S {
   background-image: url("./img/snow.jpg");
   color: red;
+
+}
+._700S {
+  background-image: url("./img/atmosphere.jpg");
+  color: azure;
+
+}
+
+._800S {
+  background-image: url("./img/clouds.jpg");
+  color: black;
 
 }
 
