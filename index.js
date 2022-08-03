@@ -4,6 +4,7 @@ let weather_info = document.querySelector("#weather_info");
 let inputBox = document.querySelector("#city");
 let joinNowTab = document.querySelector("#join_now");
 let registrationForm = document.querySelector("#registartion_form");
+let signinTab = document.querySelector("#sign_in");
 let api;
 
 //****************************            When hit Enter            *********************************/
@@ -185,4 +186,8 @@ joinNowTab.addEventListener("click", () => {
   registrationForm.style.display =
     registrationForm.style.display == "" ? "block" : "";
   console.log("Join Now clicked");
+});
+
+signinTab.addEventListener("click", () => {
+  console.log("Sign in clicked");
 });
