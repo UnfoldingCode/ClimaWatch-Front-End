@@ -2,22 +2,24 @@ let search_button = document.querySelector("#search_button");
 let location_button = document.querySelector("#my_location");
 let weather_info = document.querySelector("#weather_info");
 let inputBox = document.querySelector("#city");
+let joinNowTab = document.querySelector("#join_now");
+let registrationForm = document.querySelector("#registartion_form");
 let api;
 
 //****************************            When hit Enter            *********************************/
-// inputBox.addEventListener("keyup", (e) => {
-//   if (e.key == "Enter") {
-//     e.preventDefault();
-//     console.log("ENTER");
-//     // requestApi(inputBox.value);
-//   }
-// });
+inputBox.addEventListener("keyup", (e) => {
+  if (e.key == "Enter") {
+    e.preventDefault();
+    console.log("ENTER");
+    requestApi(inputBox.value);
+  }
+});
 
-// function requestApi(inputVal) {
-//   api = `https://api.openweathermap.org/data/2.5/weather?q=${inputVal}&units=metric&appid=e572668bb21fee7042efec77137cc15c
-// `;
-//   fetch_weather();
-// }
+function requestApi(inputVal) {
+  api = `https://api.openweathermap.org/data/2.5/weather?q=${inputVal}&units=metric&appid=e572668bb21fee7042efec77137cc15c
+`;
+  fetch_weather();
+}
 //****************************            When hit Enter            *********************************/
 
 //****************************            clock             *********************************/
@@ -101,9 +103,6 @@ search_button.addEventListener("click", () => {
 });
 
 search_button.addEventListener("click", fetch_weather);
-// search_button.addEventListener("click", () => {
-//   fetch_weather();
-// });
 
 async function fetch_weather() {
   try {
@@ -158,14 +157,6 @@ async function fetch_weather() {
         `http://openweathermap.org/img/wn/${icon}@2x.png`
       );
       weather_info.appendChild(weather_icon);
-      // let weather_description = document.createElement("span");
-      // weather_description.setAttribute("class", "tenpx");
-      // weather_description.innerText = description;
-      // weather_info.appendChild(weather_description);
-      // let temp_current = document.createElement("span");
-      // temp_current.setAttribute("class", "tenpx");
-      // temp_current.innerText = `${temp}\u00B0c`;
-      // weather_info.appendChild(temp_current);
       let min_max = document.createElement("div");
       let realFeel = document.createElement("span");
       realFeel.setAttribute("class", "tenpx");
@@ -187,3 +178,11 @@ async function fetch_weather() {
     }
   } catch {}
 }
+
+//****************************            Join Now anchor tag            *********************************/
+
+joinNowTab.addEventListener("click", () => {
+  registrationForm.style.display =
+    registrationForm.style.display == "" ? "block" : "";
+  console.log("Join Now clicked");
+});

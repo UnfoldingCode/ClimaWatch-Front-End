@@ -18,12 +18,12 @@ header {
   border-top: 6px solid #9c41f2;
   border-radius: 100%;
   margin: auto;
-  visibility: hidden;
+  display: none;
   animation: spin 1s infinite linear;
 }
 
 #loading.display{
-  visibility: visible;
+  display:block;
 }
 
 @keyframes spin {
@@ -88,4 +88,10 @@ header {
 none{
   background-image: url("");
   
+}
+
+#registartion_form{
+  display: none;
+  color:burlywood;
+  margin-left: 50px;
 }
