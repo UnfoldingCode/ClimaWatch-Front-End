@@ -3,22 +3,23 @@ let location_button = document.querySelector("#my_location");
 let weather_info = document.querySelector("#weather_info");
 let inputBox = document.querySelector("#city");
 let joinNowTab = document.querySelector("#join_now");
+let registrationForm = document.querySelector("#registartion_form");
 let api;
 
 //****************************            When hit Enter            *********************************/
-// inputBox.addEventListener("keyup", (e) => {
-//   if (e.key == "Enter") {
-//     e.preventDefault();
-//     console.log("ENTER");
-//     // requestApi(inputBox.value);
-//   }
-// });
+inputBox.addEventListener("keyup", (e) => {
+  if (e.key == "Enter") {
+    e.preventDefault();
+    console.log("ENTER");
+    requestApi(inputBox.value);
+  }
+});
 
-// function requestApi(inputVal) {
-//   api = `https://api.openweathermap.org/data/2.5/weather?q=${inputVal}&units=metric&appid=e572668bb21fee7042efec77137cc15c
-// `;
-//   fetch_weather();
-// }
+function requestApi(inputVal) {
+  api = `https://api.openweathermap.org/data/2.5/weather?q=${inputVal}&units=metric&appid=e572668bb21fee7042efec77137cc15c
+`;
+  fetch_weather();
+}
 //****************************            When hit Enter            *********************************/
 
 //****************************            clock             *********************************/
@@ -180,4 +181,8 @@ async function fetch_weather() {
 
 //****************************            Join Now anchor tag            *********************************/
 
-joinNowTab.addEventListener("click", () => console.log("Join Now clicked"));
+joinNowTab.addEventListener("click", () => {
+  registrationForm.style.display =
+    registrationForm.style.display == "" ? "block" : "";
+  console.log("Join Now clicked");
+});

@@ -89,3 +89,9 @@ none{
   background-image: url("");
   
 }
+
+#registartion_form{
+  display: none;
+  color:burlywood;
+  margin-left: 50px;
+}
