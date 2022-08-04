@@ -189,5 +189,7 @@ joinNowTab.addEventListener("click", () => {
 });
 
 signinTab.addEventListener("click", () => {
+  registrationForm.style.display =
+    registrationForm.style.display == "" ? "" : "";
   console.log("Sign in clicked");
 });
