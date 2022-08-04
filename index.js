@@ -243,13 +243,7 @@ signinTab.addEventListener("click", () => {
   console.log("Sign in clicked");
 });
 
-// click_anywhere_inPage.addEventListener("click", () => {
-// registrationForm.style.display =
-//   registrationForm.style.display == "" ? "" : "";
-//   signinForm.style.display = signinForm.style.display == "" ? "" : "";
-// });
-
-//****************************            Join Now submit button            *********************************/
+//****************************     Join Now submit button ******** beginning           *********************************/
 
 joinNow_btn_submit.addEventListener("click", (e) => {
   e.preventDefault();
@@ -303,3 +297,22 @@ async function user_registration() {
     console.log(data);
   }
 }
+//****************************      Join Now submit button   *******   end       *********************************/
+
+// let html_tag = document.querySelector("html");
+// function loop_image() {
+//   let image_folder = [
+//     "img/atmosphere.jpg",
+//     "img/clearSky.jpg",
+//     "img/clouds.jpg",
+//   ];
+//   // for (let i of image_folder) {
+//   //   // setInterval(() => {
+//   //   //   html_tag.setAttribute("style", `background:url(${i})`);
+//   //   // }, 5000);
+//   // }
+//   // loop_image();
+
+// }
+
+// loop_image();
