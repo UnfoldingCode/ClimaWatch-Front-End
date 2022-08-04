@@ -2,11 +2,19 @@ let search_button = document.querySelector("#search_button");
 let location_button = document.querySelector("#my_location");
 let weather_info = document.querySelector("#weather_info");
 let inputBox = document.querySelector("#city");
-let joinNowTab = document.querySelector("#join_now");
-let registrationForm = document.querySelector("#registartion_form");
+
 let signinTab = document.querySelector("#sign_in");
 let signinForm = document.querySelector("#signin_form");
-let click_anywhere_inPage = document.querySelector("html");
+
+//****************************            Join Now/Registration            *********************************/
+let joinNowTab = document.querySelector("#join_now");
+let registrationForm = document.querySelector("#registartion_form");
+let joinNow_username_input = document.querySelector("#username");
+let joinNow_name_input = document.querySelector("#name");
+let joinNow_password_input = document.querySelector("#password");
+let joinNow_btn_submit = document.querySelector("#registration_btn");
+//****************************            Join Now/Registration            *********************************/
+
 let api;
 
 //****************************            When hit Enter            *********************************/
