@@ -92,12 +92,19 @@ none{
 
 #registartion_form{
   display: none;
-  color:burlywood;
+  color:white;
   margin-left: 50px;
 }
 
 #signin_form{
   display: none;
-  color:burlywood;
+  color:white;
   margin-left: 50px;
+}
+
+#message_after_registration{
+  display: none;
+  color:white;
+  margin-left: 300px;
+  font-size: large;
 }

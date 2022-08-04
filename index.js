@@ -12,6 +12,9 @@ let signin_btn_submit = document.querySelector("#signin_btn");
 //****************************            Sign in            *********************************/
 
 //****************************            Join Now/Registration            *********************************/
+let message_after_registration = document.querySelector(
+  "#message_after_registration"
+);
 let joinNowTab = document.querySelector("#join_now");
 let registrationForm = document.querySelector("#registartion_form");
 let joinNow_username_input = document.querySelector("#username");
@@ -210,6 +213,8 @@ async function fetch_weather() {
 
 joinNowTab.addEventListener("click", () => {
   signinForm.style.display = signinForm.style.display == "" ? "" : "";
+  message_after_registration.style.display =
+    message_after_registration.style.display == "" ? "" : "";
   registrationForm.style.display =
     registrationForm.style.display == "" ? "block" : "";
   console.log("Join Now clicked");
@@ -219,13 +224,15 @@ joinNowTab.addEventListener("click", () => {
 signinTab.addEventListener("click", () => {
   registrationForm.style.display =
     registrationForm.style.display == "" ? "" : "";
+  message_after_registration.style.display =
+    message_after_registration.style.display == "" ? "" : "";
   signinForm.style.display = signinForm.style.display == "" ? "block" : "";
   console.log("Sign in clicked");
 });
 
 // click_anywhere_inPage.addEventListener("click", () => {
-//   registrationForm.style.display =
-//     registrationForm.style.display == "" ? "" : "";
+// registrationForm.style.display =
+//   registrationForm.style.display == "" ? "" : "";
 //   signinForm.style.display = signinForm.style.display == "" ? "" : "";
 // });
 
@@ -241,13 +248,6 @@ joinNow_btn_submit.addEventListener("click", (e) => {
 });
 
 joinNow_btn_submit.addEventListener("click", user_registration);
-
-registration_form_info = {
-  username: joinNow_username,
-  name: joinNow_name,
-  email: joinNow_email,
-  password: joinNow_password,
-};
 
 async function user_registration() {
   let res = await fetch(`http://127.0.0.1:2022/users`, {
@@ -265,6 +265,16 @@ async function user_registration() {
   });
   let data = await res.text();
   if (res.status == 200) {
+    registrationForm.style.display =
+      registrationForm.style.display == "" ? "" : "";
+    message_after_registration.style.display = "block";
+    message_after_registration.innerText = data;
+    const inputs = document.querySelectorAll(
+      "#username, #name, #email, #password"
+    );
+    inputs.forEach((input) => {
+      input.value = "";
+    });
     console.log(data);
   } else {
     console.log(data);
