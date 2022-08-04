@@ -18,6 +18,9 @@ let joinNow_username_input = document.querySelector("#username");
 let joinNow_name_input = document.querySelector("#name");
 let joinNow_password_input = document.querySelector("#password");
 let joinNow_btn_submit = document.querySelector("#registration_btn");
+let joinNow_username;
+let joinNow_name;
+let joinNow_password;
 //****************************            Join Now/Registration            *********************************/
 
 let api;
@@ -210,6 +213,7 @@ joinNowTab.addEventListener("click", () => {
   console.log("Join Now clicked");
 });
 
+//****************************            Sign in anchor tag            *********************************/
 signinTab.addEventListener("click", () => {
   registrationForm.style.display =
     registrationForm.style.display == "" ? "" : "";
@@ -222,3 +226,13 @@ signinTab.addEventListener("click", () => {
 //     registrationForm.style.display == "" ? "" : "";
 //   signinForm.style.display = signinForm.style.display == "" ? "" : "";
 // });
+
+//****************************            Join Now submit button            *********************************/
+
+joinNow_btn_submit.addEventListener("click", (e) => {
+  e.preventDefault();
+  joinNow_username = joinNow_username_input.value;
+  joinNow_name = joinNow_name_input.value;
+  joinNow_password = joinNow_password_input.value;
+  console.log(joinNow_username, joinNow_name, joinNow_password);
+});
