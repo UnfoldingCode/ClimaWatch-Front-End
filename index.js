@@ -209,6 +209,15 @@ async function fetch_weather() {
       humidity_.innerText = `Humidity: ${data.main.humidity}%`;
       min_max.appendChild(humidity_);
       weather_info.appendChild(min_max);
+    } else {
+      let city_not_found = document.createElement("p");
+      city_not_found.setAttribute("id", "city_not_found");
+      city_not_found.innerText = `City not found !!!`;
+      weather_info.appendChild(city_not_found);
+
+      setTimeout(() => {
+        weather_info.innerHTML = "";
+      }, 5000);
     }
   } catch {}
 }

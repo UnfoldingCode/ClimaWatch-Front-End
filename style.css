@@ -1,5 +1,5 @@
 html{
-background: url("./img/snow.jpg");
+background: url("./img/aurora-g8c16a613f_1920.jpg");
 }
 
 header {
@@ -107,4 +107,10 @@ none{
   color:white;
   margin-left: 300px;
   font-size: large;
+}
+
+#city_not_found{
+  text-align: center;
+  color: red;
+  background-image: url("img/snowflakes-g4d0da82e6_1920.jpg");
 }
