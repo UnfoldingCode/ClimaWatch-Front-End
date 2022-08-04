@@ -239,3 +239,34 @@ joinNow_btn_submit.addEventListener("click", (e) => {
   joinNow_password = joinNow_password_input.value;
   console.log(joinNow_username, joinNow_name, joinNow_email, joinNow_password);
 });
+
+joinNow_btn_submit.addEventListener("click", user_registration);
+
+registration_form_info = {
+  username: joinNow_username,
+  name: joinNow_name,
+  email: joinNow_email,
+  password: joinNow_password,
+};
+
+async function user_registration() {
+  let res = await fetch(`http://127.0.0.1:2022/users`, {
+    method: "POST",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      username: joinNow_username,
+      name: joinNow_name,
+      email: joinNow_email,
+      password: joinNow_password,
+    }),
+  });
+  let data = await res.text();
+  if (res.status == 200) {
+    console.log(data);
+  } else {
+    console.log(data);
+  }
+}
