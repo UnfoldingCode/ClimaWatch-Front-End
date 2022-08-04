@@ -1,9 +1,9 @@
 html{
-background: url("./img/snow.jpg");
+background: url("./img/maldives-g64c460793_1920.jpg");
 }
 
 header {
-  background-image: url("img/climate.jpeg");
+  background-image: url("img/header.jpg");
 }
 
 #clock{
@@ -58,7 +58,7 @@ header {
 }
 
 ._300S {
-  background-image: url("./img/drizzle.jpg");
+  background-image: url("./img/water-ga6db64033_1920.jpg");
   color: azure;
 }
 
@@ -92,6 +92,25 @@ none{
 
 #registartion_form{
   display: none;
-  color:burlywood;
+  color:white;
   margin-left: 50px;
+}
+
+#signin_form{
+  display: none;
+  color:white;
+  margin-left: 50px;
+}
+
+#message_after_registration{
+  display: none;
+  color:white;
+  margin-left: 300px;
+  font-size: large;
+}
+
+#city_not_found{
+  text-align: center;
+  color: red;
+  background-image: url("img/snowflakes-g4d0da82e6_1920.jpg");
 }

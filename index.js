@@ -2,8 +2,32 @@ let search_button = document.querySelector("#search_button");
 let location_button = document.querySelector("#my_location");
 let weather_info = document.querySelector("#weather_info");
 let inputBox = document.querySelector("#city");
+
+//****************************            Sign in            *********************************/
+let signinTab = document.querySelector("#sign_in");
+let signinForm = document.querySelector("#signin_form");
+let signin_username_input = document.querySelector("#user_name");
+let signin_password_input = document.querySelector("#user_password");
+let signin_btn_submit = document.querySelector("#signin_btn");
+//****************************            Sign in            *********************************/
+
+//****************************            Join Now/Registration            *********************************/
+let message_after_registration = document.querySelector(
+  "#message_after_registration"
+);
 let joinNowTab = document.querySelector("#join_now");
 let registrationForm = document.querySelector("#registartion_form");
+let joinNow_username_input = document.querySelector("#username");
+let joinNow_name_input = document.querySelector("#name");
+let joinNow_email_input = document.querySelector("#email");
+let joinNow_password_input = document.querySelector("#password");
+let joinNow_btn_submit = document.querySelector("#registration_btn");
+let joinNow_username;
+let joinNow_name;
+let joinNow_email;
+let joinNow_password;
+//****************************            Join Now/Registration            *********************************/
+
 let api;
 
 //****************************            When hit Enter            *********************************/
@@ -59,6 +83,11 @@ currentTime();
 location_button.addEventListener("click", () => {
   weather_info.innerHTML = "";
   document.querySelector("#city").value = "";
+  registrationForm.style.display =
+    registrationForm.style.display == "" ? "" : "";
+  signinForm.style.display = signinForm.style.display == "" ? "" : "";
+  message_after_registration.style.display =
+    message_after_registration.style.display == "" ? "" : "";
   displayLoading();
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(showPosition);
@@ -98,6 +127,11 @@ function hideLoading() {
 
 search_button.addEventListener("click", () => {
   displayLoading();
+  registrationForm.style.display =
+    registrationForm.style.display == "" ? "" : "";
+  signinForm.style.display = signinForm.style.display == "" ? "" : "";
+  message_after_registration.style.display =
+    message_after_registration.style.display == "" ? "" : "";
   let city = document.querySelector("#city").value;
   api = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=e572668bb21fee7042efec77137cc15c`;
 });
@@ -175,6 +209,15 @@ async function fetch_weather() {
       humidity_.innerText = `Humidity: ${data.main.humidity}%`;
       min_max.appendChild(humidity_);
       weather_info.appendChild(min_max);
+    } else {
+      let city_not_found = document.createElement("p");
+      city_not_found.setAttribute("id", "city_not_found");
+      city_not_found.innerText = `City not found !!!`;
+      weather_info.appendChild(city_not_found);
+
+      setTimeout(() => {
+        weather_info.innerHTML = "";
+      }, 5000);
     }
   } catch {}
 }
@@ -182,7 +225,94 @@ async function fetch_weather() {
 //****************************            Join Now anchor tag            *********************************/
 
 joinNowTab.addEventListener("click", () => {
+  signinForm.style.display = signinForm.style.display == "" ? "" : "";
+  message_after_registration.style.display =
+    message_after_registration.style.display == "" ? "" : "";
   registrationForm.style.display =
     registrationForm.style.display == "" ? "block" : "";
   console.log("Join Now clicked");
 });
+
+//****************************            Sign in anchor tag            *********************************/
+signinTab.addEventListener("click", () => {
+  registrationForm.style.display =
+    registrationForm.style.display == "" ? "" : "";
+  message_after_registration.style.display =
+    message_after_registration.style.display == "" ? "" : "";
+  signinForm.style.display = signinForm.style.display == "" ? "block" : "";
+  console.log("Sign in clicked");
+});
+
+//****************************     Join Now submit button ******** beginning           *********************************/
+
+joinNow_btn_submit.addEventListener("click", (e) => {
+  e.preventDefault();
+  joinNow_username = joinNow_username_input.value;
+  joinNow_name = joinNow_name_input.value;
+  joinNow_email = joinNow_email_input.value;
+  joinNow_password = joinNow_password_input.value;
+  console.log(joinNow_username, joinNow_name, joinNow_email, joinNow_password);
+});
+
+joinNow_btn_submit.addEventListener("click", user_registration);
+
+async function user_registration() {
+  let res = await fetch(`http://127.0.0.1:2022/users`, {
+    method: "POST",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      username: joinNow_username,
+      name: joinNow_name,
+      email: joinNow_email,
+      password: joinNow_password,
+    }),
+  });
+  let data = await res.text();
+  if (res.status == 200) {
+    registrationForm.style.display =
+      registrationForm.style.display == "" ? "" : "";
+    message_after_registration.style.display = "block";
+    message_after_registration.innerText = data;
+    const inputs = document.querySelectorAll(
+      "#username, #name, #email, #password"
+    );
+    inputs.forEach((input) => {
+      input.value = "";
+    });
+    console.log(data);
+  } else {
+    registrationForm.style.display =
+      registrationForm.style.display == "" ? "" : "";
+    message_after_registration.style.display = "block";
+    message_after_registration.innerText = data;
+    const inputs = document.querySelectorAll(
+      "#username, #name, #email, #password"
+    );
+    inputs.forEach((input) => {
+      input.value = "";
+    });
+    console.log(data);
+  }
+}
+//****************************      Join Now submit button   *******   end       *********************************/
+
+// let html_tag = document.querySelector("html");
+// function loop_image() {
+//   let image_folder = [
+//     "img/atmosphere.jpg",
+//     "img/clearSky.jpg",
+//     "img/clouds.jpg",
+//   ];
+//   // for (let i of image_folder) {
+//   //   // setInterval(() => {
+//   //   //   html_tag.setAttribute("style", `background:url(${i})`);
+//   //   // }, 5000);
+//   // }
+//   // loop_image();
+
+// }
+
+// loop_image();

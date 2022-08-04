@@ -19,17 +19,29 @@
     <header>
       <div ><span><a class="twentypx" href="./index.html"><u>Refresh</u></a></span>
       <span><a id="join_now" class="twentypx"><u>Join Now</u></a></span>
-      <span><a class="twentypx"><u>Sign in</u></a></span>
+      <span><a id="sign_in" class="twentypx"><u>Sign in</u></a></span>
       </div>
       <div>
+        <p id="message_after_registration"></p>
         <form id="registartion_form">
           <label for="username">Username</label>
           <input type="text" id="username"><br>
           <label for="name">Name</label>
           <input type="text" id="name"><br>
+          <label for="email">Email</label>
+          <input type="email" id="email"><br>
           <label for="password">Password</label>
-          <input type="text" id="password"><br>
-
+          <input type="password" id="password"><br>
+          <button type="button" id="registration_btn">Join Now</button>
+        </form>
+      </div>
+      <div>
+        <form id="signin_form">
+          <label for="user_name">Username</label>
+          <input type="text" id="user_name">
+          <label for="user_password">Password</label>
+          <input type="password" id="user_password">
+          <button type="button" id="signin_btn">Sign in</button>
         </form>
       </div>
       <div>
