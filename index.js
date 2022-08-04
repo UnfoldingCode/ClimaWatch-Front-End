@@ -16,10 +16,12 @@ let joinNowTab = document.querySelector("#join_now");
 let registrationForm = document.querySelector("#registartion_form");
 let joinNow_username_input = document.querySelector("#username");
 let joinNow_name_input = document.querySelector("#name");
+let joinNow_email_input = document.querySelector("#email");
 let joinNow_password_input = document.querySelector("#password");
 let joinNow_btn_submit = document.querySelector("#registration_btn");
 let joinNow_username;
 let joinNow_name;
+let joinNow_email;
 let joinNow_password;
 //****************************            Join Now/Registration            *********************************/
 
@@ -233,6 +235,7 @@ joinNow_btn_submit.addEventListener("click", (e) => {
   e.preventDefault();
   joinNow_username = joinNow_username_input.value;
   joinNow_name = joinNow_name_input.value;
+  joinNow_email = joinNow_email_input.value;
   joinNow_password = joinNow_password_input.value;
-  console.log(joinNow_username, joinNow_name, joinNow_password);
+  console.log(joinNow_username, joinNow_name, joinNow_email, joinNow_password);
 });
