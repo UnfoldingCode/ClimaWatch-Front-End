@@ -3,8 +3,13 @@ let location_button = document.querySelector("#my_location");
 let weather_info = document.querySelector("#weather_info");
 let inputBox = document.querySelector("#city");
 
+//****************************            Sign in            *********************************/
 let signinTab = document.querySelector("#sign_in");
 let signinForm = document.querySelector("#signin_form");
+let signin_username_input = document.querySelector("#user_name");
+let signin_password_input = document.querySelector("#user_password");
+let signin_btn_submit = document.querySelector("#signin_btn");
+//****************************            Sign in            *********************************/
 
 //****************************            Join Now/Registration            *********************************/
 let joinNowTab = document.querySelector("#join_now");
