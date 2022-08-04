@@ -95,3 +95,10 @@ none{
   color:burlywood;
   margin-left: 50px;
 }
+
+#title1, #title2, #title3{
+  font-size: large;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: Bold;
+  text-align: center;
+}

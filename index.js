@@ -5,7 +5,8 @@ let inputBox = document.querySelector("#city");
 let joinNowTab = document.querySelector("#join_now");
 let registrationForm = document.querySelector("#registartion_form");
 let api;
-
+let data;
+let newsApi;
 //****************************            When hit Enter            *********************************/
 inputBox.addEventListener("keyup", (e) => {
   if (e.key == "Enter") {
@@ -20,6 +21,12 @@ function requestApi(inputVal) {
 `;
   fetch_weather();
 }
+
+function requestNewsApi(inputCountry) {
+  newsApi = `https://newsdata.io/api/1/news?apikey=pub_9879923018ce89b9bb0bdf501694d53d3789&country=${inputCountry}`;
+  fetch_news();
+}
+
 //****************************            When hit Enter            *********************************/
 
 //****************************            clock             *********************************/
@@ -67,11 +74,13 @@ location_button.addEventListener("click", () => {
   }
 });
 
+
 function showPosition(position) {
   const { latitude, longitude } = position.coords;
   api = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&appid=e572668bb21fee7042efec77137cc15c
 `;
   fetch_weather();
+  fetch_news();
 }
 //****** Using HTML Geolocation - The getCurrentPosition() method is used to return the user's position.    */
 
@@ -104,12 +113,14 @@ search_button.addEventListener("click", () => {
 
 search_button.addEventListener("click", fetch_weather);
 
+search_button.addEventListener("click", fetch_news);
+
 async function fetch_weather() {
   try {
     weather_info.innerHTML = "";
     let res = await fetch(api);
     console.log(res);
-    let data = await res.json();
+    data = await res.json();
     hideLoading();
     document.querySelector("#city").value = "";
     if (res.status == 200) {
@@ -175,6 +186,70 @@ async function fetch_weather() {
       humidity_.innerText = `Humidity: ${data.main.humidity}%`;
       min_max.appendChild(humidity_);
       weather_info.appendChild(min_max);
+    }
+  } catch {}
+}
+
+async function fetch_news() {
+  try {
+    let re = await fetch(`https://newsdata.io/api/1/news?apikey=pub_9879923018ce89b9bb0bdf501694d53d3789&country=${data.sys.country}`);
+    console.log(re)
+    newsData = await re.json();
+    if (re.status == 200) {
+      console.log(newsData.results[0])
+      let Image =[];
+      let Title =[];
+      let Descript =[];
+      for(let l=0;l<3;l++){
+        Image.push(newsData.results[l].image_url);
+        Title.push(newsData.results[l].title);
+        Descript.push(newsData.results[l].description);
+      }
+      let firstcolumn = document.querySelector('#column1');
+      let secondcolumn = document.querySelector('#column2');
+      let thirdcolumn = document.querySelector('#column3');
+
+      let pictureone = document.createElement("img");
+      pictureone.setAttribute("src", `${Image[0]}`);
+      firstcolumn.appendChild(pictureone);
+
+      let picturetwo = document.createElement("img");
+      picturetwo.setAttribute("src", `${Image[1]}`);
+      secondcolumn.appendChild(picturetwo);
+
+      let picturethree = document.createElement("img");
+      picturethree.setAttribute("src", `${Image[2]}`);
+      thirdcolumn.appendChild(picturethree);
+
+      let newsTitleOne = document.createElement("h1");
+      newsTitleOne.setAttribute("id", "title1");
+      newsTitleOne.innerText = Title[0];
+      firstcolumn.appendChild(newsTitleOne);
+
+      let newsTitleTwo = document.createElement("h2");
+      newsTitleTwo.setAttribute("id", "title2");
+      newsTitleTwo.innerText = Title[1];
+      secondcolumn.appendChild(newsTitleTwo);
+
+      let newsTitleThree = document.createElement("h3");
+      newsTitleThree.setAttribute("id", "title3");
+      newsTitleThree.innerText = Title[2];
+      thirdcolumn.appendChild(newsTitleThree);
+
+      let newsDescriptionOne = document.createElement("p");
+      newsDescriptionOne.setAttribute("class", "Desc1");
+      newsDescriptionOne.innerText = Descript[0];
+      firstcolumn.appendChild(newsDescriptionOne);
+
+      let newsDescriptionTwo = document.createElement("p");
+      newsDescriptionTwo.setAttribute("class", "Desc2");
+      newsDescriptionTwo.innerText = Descript[1];
+      secondcolumn.appendChild(newsDescriptionTwo);
+
+      let newsDescriptionThree = document.createElement("p");
+      newsDescriptionThree.setAttribute("class", "Desc3");
+      newsDescriptionThree.innerText = Descript[2];
+      thirdcolumn.appendChild(newsDescriptionThree);
     }
   } catch {}
 }
