@@ -277,6 +277,16 @@ async function user_registration() {
     });
     console.log(data);
   } else {
+    registrationForm.style.display =
+      registrationForm.style.display == "" ? "" : "";
+    message_after_registration.style.display = "block";
+    message_after_registration.innerText = data;
+    const inputs = document.querySelectorAll(
+      "#username, #name, #email, #password"
+    );
+    inputs.forEach((input) => {
+      input.value = "";
+    });
     console.log(data);
   }
 }
