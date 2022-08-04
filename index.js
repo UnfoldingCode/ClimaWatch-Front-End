@@ -86,6 +86,8 @@ location_button.addEventListener("click", () => {
   registrationForm.style.display =
     registrationForm.style.display == "" ? "" : "";
   signinForm.style.display = signinForm.style.display == "" ? "" : "";
+  message_after_registration.style.display =
+    message_after_registration.style.display == "" ? "" : "";
   displayLoading();
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(showPosition);
@@ -128,6 +130,8 @@ search_button.addEventListener("click", () => {
   registrationForm.style.display =
     registrationForm.style.display == "" ? "" : "";
   signinForm.style.display = signinForm.style.display == "" ? "" : "";
+  message_after_registration.style.display =
+    message_after_registration.style.display == "" ? "" : "";
   let city = document.querySelector("#city").value;
   api = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=e572668bb21fee7042efec77137cc15c`;
 });
