@@ -5,6 +5,8 @@ let inputBox = document.querySelector("#city");
 let joinNowTab = document.querySelector("#join_now");
 let registrationForm = document.querySelector("#registartion_form");
 let signinTab = document.querySelector("#sign_in");
+let signinForm = document.querySelector("#signin_form");
+let click_anywhere_inPage = document.querySelector("html");
 let api;
 
 //****************************            When hit Enter            *********************************/
@@ -60,6 +62,9 @@ currentTime();
 location_button.addEventListener("click", () => {
   weather_info.innerHTML = "";
   document.querySelector("#city").value = "";
+  registrationForm.style.display =
+    registrationForm.style.display == "" ? "" : "";
+  signinForm.style.display = signinForm.style.display == "" ? "" : "";
   displayLoading();
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(showPosition);
@@ -99,6 +104,9 @@ function hideLoading() {
 
 search_button.addEventListener("click", () => {
   displayLoading();
+  registrationForm.style.display =
+    registrationForm.style.display == "" ? "" : "";
+  signinForm.style.display = signinForm.style.display == "" ? "" : "";
   let city = document.querySelector("#city").value;
   api = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=e572668bb21fee7042efec77137cc15c`;
 });
@@ -183,6 +191,7 @@ async function fetch_weather() {
 //****************************            Join Now anchor tag            *********************************/
 
 joinNowTab.addEventListener("click", () => {
+  signinForm.style.display = signinForm.style.display == "" ? "" : "";
   registrationForm.style.display =
     registrationForm.style.display == "" ? "block" : "";
   console.log("Join Now clicked");
@@ -191,5 +200,12 @@ joinNowTab.addEventListener("click", () => {
 signinTab.addEventListener("click", () => {
   registrationForm.style.display =
     registrationForm.style.display == "" ? "" : "";
+  signinForm.style.display = signinForm.style.display == "" ? "block" : "";
   console.log("Sign in clicked");
 });
+
+// click_anywhere_inPage.addEventListener("click", () => {
+//   registrationForm.style.display =
+//     registrationForm.style.display == "" ? "" : "";
+//   signinForm.style.display = signinForm.style.display == "" ? "" : "";
+// });
