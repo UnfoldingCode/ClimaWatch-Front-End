@@ -247,7 +247,7 @@ signinTab.addEventListener("click", () => {
 
 joinNow_btn_submit.addEventListener("click", (e) => {
   e.preventDefault();
-  joinNow_username = joinNow_username_input.value;
+  joinNow_username = joinNow_username_input.value.toLowerCase();
   joinNow_name = joinNow_name_input.value;
   joinNow_email = joinNow_email_input.value;
   joinNow_password = joinNow_password_input.value;
