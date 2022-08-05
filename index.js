@@ -3,13 +3,13 @@ let location_button = document.querySelector("#my_location");
 let weather_info = document.querySelector("#weather_info");
 let inputBox = document.querySelector("#city");
 
-//****************************            Sign in            *********************************/
+//****************************            Sign in Anchor Tab begining           *********************************/
 let signinTab = document.querySelector("#sign_in");
 let signinForm = document.querySelector("#signin_form");
 let signin_username_input = document.querySelector("#user_name");
 let signin_password_input = document.querySelector("#user_password");
 let signin_btn_submit = document.querySelector("#signin_btn");
-//****************************            Sign in            *********************************/
+//****************************            Sign in   Anchor Tab End        *********************************/
 
 //****************************            Join Now/Registration            *********************************/
 let message_after_registration = document.querySelector(
@@ -299,20 +299,8 @@ async function user_registration() {
 }
 //****************************      Join Now submit button   *******   end       *********************************/
 
-// let html_tag = document.querySelector("html");
-// function loop_image() {
-//   let image_folder = [
-//     "img/atmosphere.jpg",
-//     "img/clearSky.jpg",
-//     "img/clouds.jpg",
-//   ];
-//   // for (let i of image_folder) {
-//   //   // setInterval(() => {
-//   //   //   html_tag.setAttribute("style", `background:url(${i})`);
-//   //   // }, 5000);
-//   // }
-//   // loop_image();
-
-// }
-
-// loop_image();
+//****************************     Sign in button ******** beginning           *********************************/
+signin_btn_submit.addEventListener("click", (e) => {
+  e.preventDefault();
+  console.log("Sign Button is clicked. Users is trying to sign in");
+});
