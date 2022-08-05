@@ -4,6 +4,12 @@ let weather_info = document.querySelector("#weather_info");
 let inputBox = document.querySelector("#city");
 let joinNowTab = document.querySelector("#join_now");
 let registrationForm = document.querySelector("#registartion_form");
+let firstcolumn = document.querySelector('#card1');
+let firstcard = document.querySelector('#card1');
+let secondcard = document.querySelector('#card2');
+let thirdcard = document.querySelector('#card3');
+let secondcolumn = document.querySelector('#card2');
+let thirdcolumn = document.querySelector('#card3');
 let api;
 let data;
 let newsApi;
@@ -20,12 +26,7 @@ function requestApi(inputVal) {
   api = `https://api.openweathermap.org/data/2.5/weather?q=${inputVal}&units=metric&appid=e572668bb21fee7042efec77137cc15c
 `;
   fetch_weather();
-}
-
-function requestNewsApi(inputCountry) {
-  newsApi = `https://newsdata.io/api/1/news?apikey=pub_9879923018ce89b9bb0bdf501694d53d3789&country=${inputCountry}`;
-  fetch_news();
-}
+} 
 
 //****************************            When hit Enter            *********************************/
 
@@ -191,6 +192,9 @@ async function fetch_weather() {
 }
 
 async function fetch_news() {
+  firstcolumn.innerHTML="";
+  secondcolumn.innerHTML="";
+  thirdcolumn.innerHTML="";
   try {
     let re = await fetch(`https://newsdata.io/api/1/news?apikey=pub_9879923018ce89b9bb0bdf501694d53d3789&country=${data.sys.country}`);
     console.log(re)
@@ -200,56 +204,116 @@ async function fetch_news() {
       let Image =[];
       let Title =[];
       let Descript =[];
+      let links = [];
       for(let l=0;l<3;l++){
-        Image.push(newsData.results[l].image_url);
+        if(newsData.results[l].image_url==null){
+          Image.push("")
+        }else{
+          Image.push(newsData.results[l].image_url);
+        }
         Title.push(newsData.results[l].title);
         Descript.push(newsData.results[l].description);
+        links.push(newsData.results[l].link);
       }
-      let firstcolumn = document.querySelector('#column1');
-      let secondcolumn = document.querySelector('#column2');
-      let thirdcolumn = document.querySelector('#column3');
 
-      let pictureone = document.createElement("img");
-      pictureone.setAttribute("src", `${Image[0]}`);
-      firstcolumn.appendChild(pictureone);
+      
+      if(Image[0]==""){
+        console.log("No First Column Image")
+      }else{
+        let pictureone = document.createElement("img");
+        pictureone.setAttribute("src", `${Image[0]}`);
+        firstcard.appendChild(pictureone);
+      }
 
-      let picturetwo = document.createElement("img");
-      picturetwo.setAttribute("src", `${Image[1]}`);
-      secondcolumn.appendChild(picturetwo);
+      if(Image[1]==""){
+        console.log("No Second Column Image")
+      }else{
+        let picturetwo = document.createElement("img");
+        picturetwo.setAttribute("src", `${Image[1]}`);
+        secondcard.appendChild(picturetwo);
+      }
 
-      let picturethree = document.createElement("img");
-      picturethree.setAttribute("src", `${Image[2]}`);
-      thirdcolumn.appendChild(picturethree);
+      if(Image[2]==""){
+        console.log("No Third Column Image")
+      }else{
+        let picturethree = document.createElement("img");
+        picturethree.setAttribute("src", `${Image[2]}`);
+        thirdcard.appendChild(picturethree);
+      }
 
-      let newsTitleOne = document.createElement("h1");
-      newsTitleOne.setAttribute("id", "title1");
+      let titleDivOne = document.createElement("div");
+      titleDivOne.setAttribute("class", "card-content")
+      let newsTitleOne = document.createElement("h4");
+      newsTitleOne.setAttribute("class", "card-title");
       newsTitleOne.innerText = Title[0];
-      firstcolumn.appendChild(newsTitleOne);
+      titleDivOne.appendChild(newsTitleOne);
 
-      let newsTitleTwo = document.createElement("h2");
-      newsTitleTwo.setAttribute("id", "title2");
+      let titleDivTwo = document.createElement("div");
+      titleDivTwo.setAttribute("class", "card-content")
+      let newsTitleTwo = document.createElement("h4");
+      newsTitleTwo.setAttribute("class", "card-title");
       newsTitleTwo.innerText = Title[1];
-      secondcolumn.appendChild(newsTitleTwo);
+      titleDivTwo.appendChild(newsTitleTwo);
 
-      let newsTitleThree = document.createElement("h3");
-      newsTitleThree.setAttribute("id", "title3");
+      let titleDivThree = document.createElement("div");
+      titleDivThree.setAttribute("class", "card-content")
+      let newsTitleThree = document.createElement("h4");
+      newsTitleThree.setAttribute("class", "card-title");
       newsTitleThree.innerText = Title[2];
-      thirdcolumn.appendChild(newsTitleThree);
+      titleDivThree.appendChild(newsTitleThree)
 
+      let descDivOne = document.createElement("div");
+      descDivOne.setAttribute("class", "card-content")
       let newsDescriptionOne = document.createElement("p");
       newsDescriptionOne.setAttribute("class", "Desc1");
       newsDescriptionOne.innerText = Descript[0];
-      firstcolumn.appendChild(newsDescriptionOne);
+      titleDivOne.appendChild(newsDescriptionOne)
+      firstcolumn.appendChild(titleDivOne);
 
+      let descDivTwo = document.createElement("div");
+      descDivTwo.setAttribute("class", "card-content")
       let newsDescriptionTwo = document.createElement("p");
       newsDescriptionTwo.setAttribute("class", "Desc2");
       newsDescriptionTwo.innerText = Descript[1];
-      secondcolumn.appendChild(newsDescriptionTwo);
+      titleDivTwo.appendChild(newsDescriptionTwo)
+      secondcolumn.appendChild(titleDivTwo);
 
+      let descDivThree = document.createElement("div");
+      descDivThree.setAttribute("class", "card-content")
       let newsDescriptionThree = document.createElement("p");
       newsDescriptionThree.setAttribute("class", "Desc3");
       newsDescriptionThree.innerText = Descript[2];
-      thirdcolumn.appendChild(newsDescriptionThree);
+      titleDivThree.appendChild(newsDescriptionThree)
+      thirdcolumn.appendChild(titleDivThree);
+
+      let readMoreDivtt = document.createElement("div");
+      readMoreDivtt.setAttribute("class", "card-content")
+      let readMoreOne = document.createElement("a")
+      readMoreDivtt.setAttribute("class", "card-read-more");
+      readMoreOne.setAttribute("href", `${links[0]}`)
+      readMoreOne.innerText = "Read-More";
+      readMoreDivtt.appendChild(readMoreOne);
+      firstcolumn.appendChild(readMoreDivtt);
+
+      let readMoreDivt = document.createElement("div");
+      readMoreDivt.setAttribute("class", "card-content")
+      let readMoreTwo = document.createElement("a")
+      readMoreDivt.setAttribute("class", "card-read-more");
+      readMoreTwo.setAttribute("href", `${links[1]}`);
+      readMoreTwo.innerText = "Read-More";
+      readMoreDivt.appendChild(readMoreTwo);
+      secondcolumn.appendChild(readMoreDivt);
+
+      let readMoreDivo = document.createElement("div");
+      readMoreDivo.setAttribute("class", "card-content")
+      let readMoreThree = document.createElement("a");
+      readMoreDivo.setAttribute("class", "card-read-more");
+      readMoreThree.setAttribute("href", `${links[2]}`);
+      readMoreThree.innerText = "Read-More";
+      readMoreDivo.appendChild(readMoreThree);
+      thirdcolumn.appendChild(readMoreDivo);
+
+
     }
   } catch {}
 }
