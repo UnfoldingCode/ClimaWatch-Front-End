@@ -299,8 +299,28 @@ async function user_registration() {
 }
 //****************************      Join Now submit button   *******   end       *********************************/
 
-//****************************     Sign in button ******** beginning           *********************************/
+//****************************     Sign in button grabbing username and value ******** beginning           *********************************/
 signin_btn_submit.addEventListener("click", (e) => {
   e.preventDefault();
   console.log("Sign Button is clicked. Users is trying to sign in");
+  signin_username_input = signin_username_input.value.toLowerCase();
+  signin_password_input = signin_password_input.value;
+  console.log(signin_username_input, signin_password_input);
 });
+
+//****************************     Sign in button grabbing username and value ******** end           *********************************/
+
+//****************************     Function to send sign in post request to backend ******** beginning           *********************************/
+async function sign_in_by_user() {
+  let res = await fetch(`http://127.0.0.1:2022/login`, {
+    method: "POST",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      username: signin_username_input,
+      password: signin_password_input,
+    }),
+  });
+}
