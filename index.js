@@ -345,7 +345,7 @@ async function sign_in_by_user() {
 
     let user_logged_in = sessionStorage.getItem("username");
     console.log(user_logged_in);
-    if (naam) {
+    if (user_logged_in) {
       joinNowTab.style.display = "none";
       signinTab.style.display = "none";
       signinForm.reset();
@@ -354,3 +354,17 @@ async function sign_in_by_user() {
     }
   }
 }
+
+async function logout() {
+  let res = await fetch(`http://127.0.0.1:2022/logout`, {
+    method: "POST",
+  });
+  let data = await res.json();
+  let message = data["message"];
+  if (res.status == 200) {
+    sessionStorage.clear();
+    window.location.href = "./index.html";
+  }
+}
+
+log_out_tab.addEventListener("click", logout);
