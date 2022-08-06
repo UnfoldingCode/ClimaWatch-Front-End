@@ -262,6 +262,7 @@ async function fetch_weather() {
         console.log(city);
 
         add_to_fav_btn.addEventListener("click", add_location);
+        // add_to_fav_btn.addEventListener("click", get_location);
 
         async function add_location() {
           let res = await fetch(
@@ -282,6 +283,31 @@ async function fetch_weather() {
           let data = await res.text();
           if (res.status == 200) {
             console.log(data);
+            get_location();
+          } else {
+            console.log(data);
+            get_location();
+          }
+        }
+
+        async function get_location() {
+          let res = await fetch(
+            `http://127.0.0.1:2022/locations/${localStorage.getItem(
+              "username"
+            )}`,
+            {
+              credentials: "include",
+              method: "GET",
+            }
+          );
+          let data = await res.json();
+          if (res.status == 200) {
+            locations_array = data["locations"];
+            let city_array = [];
+            for (city of locations_array) {
+              city_array.push(city[2]);
+            }
+            console.log(city_array);
           }
         }
       }
