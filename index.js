@@ -255,9 +255,6 @@ async function fetch_weather() {
           console.log(`Hey you have added ${city} into your favorite list`);
           let location_table = document.querySelector("#table");
           location_table.style.display = "block";
-          // let t_body = document.querySelector("#t_body");
-          // let t_row = document.createComment("tr");
-          // t_body.appendChild(t_row);
         });
         console.log(city);
 
@@ -304,10 +301,29 @@ async function fetch_weather() {
           if (res.status == 200) {
             locations_array = data["locations"];
             let city_array = [];
-            for (city of locations_array) {
-              city_array.push(city[2]);
+            for (elm of locations_array) {
+              city_array.push(elm[2]);
             }
             console.log(city_array);
+            let t_body = document.querySelector("#t_body");
+            // let t_row = document.createElement("tr");
+            create_table(city_array);
+
+            // for (let i = 0; i < city_array.length; i++) {
+            //   api = `https://api.openweathermap.org/data/2.5/weather?q=${city_array[i]}&units=metric&appid=e572668bb21fee7042efec77137cc15c`;
+            //   // let t_body = document.querySelector("#t_body");
+            //   // let t_row = document.createComment("tr");
+            //   // t_body.appendChild(t_row);
+            //   // let s_num = document.createComment
+            //   send_api_request(api);
+            //   async function send_api_request(api) {
+            //     let res = await fetch(api);
+            //     let data = await res.json();
+            //     if (res.status == 200) {
+            //       console.log(data);
+            //     }
+            //   }
+            // }
           }
         }
       }
@@ -475,20 +491,40 @@ log_out_tab.addEventListener("click", logout);
 
 //****************************     Logout tab event listener ******** end           *********************************/
 
-//***********************Fetch Post request to add a location to favorite */
-// async function add_location() {
-//   let res = await fetch(`http://127.0.0.1:2022/locations/${logged_username}`, {
-//     method: "POST",
-//     credentials: "include",
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify({
-//       location: "Birtamod",
-//     }),
-//   });
-//   let data = await res.text();
-//   if (res.status == 200) {
-//     console.log(data);
-//   }
-// }
+//***********************Function to create table of locations */
+function create_table(arr) {
+  for (let elm of arr) {
+    // let t_body = document.querySelector("#t_body");
+    let t_row = document.createElement("tr");
+
+    let s_1 = document.createElement("td");
+    s_1.innerText = "orange";
+    t_row.appendChild(s_1);
+
+    let s_2 = document.createElement("td");
+    s_2.innerText = "ball";
+    t_row.appendChild(s_2);
+    let s_3 = document.createElement("td");
+    s_3.innerText = "cat";
+    t_row.appendChild(s_3);
+    let s_4 = document.createElement("td");
+    s_4.innerText = "dog";
+    t_row.appendChild(s_4);
+    let s_5 = document.createElement("td");
+    s_5.innerText = "egg";
+    t_row.appendChild(s_5);
+    let s_6 = document.createElement("td");
+    s_6.innerText = "fish";
+    t_row.appendChild(s_6);
+    let s_7 = document.createElement("td");
+    s_7.innerText = "grass";
+    t_row.appendChild(s_7);
+    let s_8 = document.createElement("td");
+    s_8.innerText = "horse";
+    t_row.appendChild(s_8);
+    let s_9 = document.createElement("td");
+    s_9.innerText = "ink";
+    t_row.appendChild(s_9);
+    t_body.appendChild(t_row);
+  }
+}
