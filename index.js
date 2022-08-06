@@ -32,7 +32,8 @@ let joinNow_password;
 //****************************            Join Now/Registration   End         *********************************/
 
 //******************************** if user is logged in  start ***************************
-if (localStorage.getItem("username")) {
+let logged_username = localStorage.getItem("username");
+if (logged_username) {
   joinNowTab.style.display = "none";
   signinTab.style.display = "none";
   signinForm.reset();
@@ -197,6 +198,7 @@ async function fetch_weather() {
       let location = document.createElement("span");
       location.setAttribute("class", "tenpx");
       location.innerText = `${data.name}, ${data.sys.country}`;
+      let city = location.innerText;
       weather_info.appendChild(location);
 
       let weather_icon = document.createElement("img");
@@ -248,12 +250,16 @@ async function fetch_weather() {
         add_to_fav.appendChild(add_to_fav_btn);
         weather_info.appendChild(add_to_fav);
         add_to_fav_btn.addEventListener("click", () => {
-          city = `${data.name}, ${data.sys.country}`;
+          // city = `${data.name}, ${data.sys.country}`;
           // api = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=e572668bb21fee7042efec77137cc15c`;
           console.log(`Hey you have added ${city} into your favorite list`);
           let location_table = document.querySelector("#table");
           location_table.style.display = "block";
+          // let t_body = document.querySelector("#t_body");
+          // let t_row = document.createComment("tr");
+          // t_body.appendChild(t_row);
         });
+        console.log(city);
       }
     } else {
       let city_not_found = document.createElement("p");
@@ -416,3 +422,21 @@ async function logout() {
 log_out_tab.addEventListener("click", logout);
 
 //****************************     Logout tab event listener ******** end           *********************************/
+
+//***********************Fetch Post request to add a location to favorite */
+async function add_location() {
+  let res = await fetch(`http://127.0.0.1:2022/locations/kareem11`, {
+    method: "POST",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      username: joinNow_username,
+      name: joinNow_name,
+      email: joinNow_email,
+      password: joinNow_password,
+    }),
+  });
+  let data = await res.text();
+}
