@@ -331,6 +331,15 @@ async function sign_in_by_user() {
   let name = data["users"][0]["name"];
   console.log(`${name} logged in`);
   if (res.status == 200) {
-    sessionStorage.setItem("username", name);
+    localStorage.setItem("username", name);
+
+    let naam = localStorage.getItem("username");
+    console.log(naam);
+    if (naam) {
+      joinNowTab.style.display = "none";
+      signinTab.style.display = "none";
+      signinForm.reset();
+      signinForm.style.display = "none";
+    }
   }
 }
