@@ -114,3 +114,7 @@ none{
   color: red;
   background-image: url("img/maldives-g64c460793_1920.jpg");
 }
+
+#sign_out{
+  display: none;
+}

@@ -2,6 +2,7 @@ let search_button = document.querySelector("#search_button");
 let location_button = document.querySelector("#my_location");
 let weather_info = document.querySelector("#weather_info");
 let inputBox = document.querySelector("#city");
+let log_out_tab = document.querySelector("#sign_out");
 
 //****************************            Sign in Anchor Tab begining           *********************************/
 let signinTab = document.querySelector("#sign_in");
@@ -27,6 +28,15 @@ let joinNow_name;
 let joinNow_email;
 let joinNow_password;
 //****************************            Join Now/Registration            *********************************/
+
+//******************************** if user is logged in ***************************
+if (sessionStorage.getItem("username")) {
+  joinNowTab.style.display = "none";
+  signinTab.style.display = "none";
+  signinForm.reset();
+  signinForm.style.display = "none";
+  log_out_tab.style.display = "inline-block";
+}
 
 let api;
 
@@ -331,15 +341,16 @@ async function sign_in_by_user() {
   let name = data["users"][0]["name"];
   console.log(`${name} logged in`);
   if (res.status == 200) {
-    localStorage.setItem("username", name);
+    sessionStorage.setItem("username", name);
 
-    let naam = localStorage.getItem("username");
-    console.log(naam);
+    let user_logged_in = sessionStorage.getItem("username");
+    console.log(user_logged_in);
     if (naam) {
       joinNowTab.style.display = "none";
       signinTab.style.display = "none";
       signinForm.reset();
       signinForm.style.display = "none";
+      log_out_tab.style.display = "inline-block";
     }
   }
 }
