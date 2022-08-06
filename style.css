@@ -14,8 +14,8 @@ header {
 #loading{
   width: 2rem;
   height: 2rem;
-  border: 5px solid #f3f3f3;
-  border-top: 6px solid #9c41f2;
+  border: 5px solid orange;
+  border-top: 6px solid greenyellow;
   border-radius: 100%;
   margin: auto;
   display: none;
