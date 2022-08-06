@@ -309,6 +309,10 @@ signin_btn_submit.addEventListener("click", (e) => {
 });
 
 //****************************     Sign in button grabbing username and value ******** end           *********************************/
+//****************************     Sign in button sending fetch request ******** beginning           *********************************/
+signin_btn_submit.addEventListener("click", sign_in_by_user);
+
+//****************************     Sign in button sending fetch request ******** end           *********************************/
 
 //****************************     Function to send sign in post request to backend ******** beginning           *********************************/
 async function sign_in_by_user() {
@@ -323,4 +327,10 @@ async function sign_in_by_user() {
       password: signin_password_input,
     }),
   });
+  let data = await res.json();
+  let name = data["users"][0]["name"];
+  console.log(`${name} logged in`);
+  if (res.status == 200) {
+    sessionStorage.setItem("username", name);
+  }
 }
