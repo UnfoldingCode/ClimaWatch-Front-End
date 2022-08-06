@@ -40,6 +40,12 @@ if (localStorage.getItem("username")) {
   log_out_tab.style.display = "inline";
   user_logged_in = localStorage.getItem("username");
   user_info.innerHTML = `${user_logged_in}, Welcome to ClimaWatch !!! `;
+  // let add_to_fav = document.createElement("span");
+  // let add_to_fav_btn = document.createElement("button");
+  // add_to_fav.setAttribute("type", "button");
+  // add_to_fav.setAttribute("id", "add_to_fav_btn");
+  // add_to_fav.appendChild(add_to_fav_btn);
+  // weather_info.appendChild(add_to_fav);
 }
 
 //******************************** if user is logged in end ***************************
@@ -187,31 +193,45 @@ async function fetch_weather() {
       } else {
         weather_info.setAttribute("class", "none");
       }
-      let location = document.createElement("p");
+      let location = document.createElement("span");
       location.setAttribute("class", "tenpx");
       location.innerText = `${data.name}, ${data.sys.country}`;
       weather_info.appendChild(location);
-
-      let weather_description = document.createElement("span");
-      weather_description.setAttribute("class", "tenpx");
-      weather_description.innerText = description;
-      location.appendChild(weather_description);
-      let temp_current = document.createElement("span");
-      temp_current.setAttribute("class", "tenpx");
-      temp_current.innerText = `${temp}\u00B0c`;
-      location.appendChild(temp_current);
 
       let weather_icon = document.createElement("img");
       weather_icon.setAttribute(
         "src",
         `http://openweathermap.org/img/wn/${icon}@2x.png`
       );
-      weather_info.appendChild(weather_icon);
-      let min_max = document.createElement("div");
+      location.appendChild(weather_icon);
+
+      let weather_description = document.createElement("span");
+      weather_description.setAttribute("class", "tenpx");
+      weather_description.innerText = description;
+      location.appendChild(weather_description);
+
+      let temp_current = document.createElement("span");
+      temp_current.setAttribute("class", "tenpx");
+      temp_current.innerText = `${temp}\u00B0c`;
+      location.appendChild(temp_current);
+
       let realFeel = document.createElement("span");
       realFeel.setAttribute("class", "tenpx");
       realFeel.innerText = `Feels like ${feels_like}\u00B0c`;
-      min_max.appendChild(realFeel);
+      location.appendChild(realFeel);
+
+      // let weather_icon = document.createElement("img");
+      // weather_icon.setAttribute(
+      //   "src",
+      //   `http://openweathermap.org/img/wn/${icon}@2x.png`
+      // );
+      // weather_info.appendChild(weather_icon);
+
+      let min_max = document.createElement("span");
+      // let realFeel = document.createElement("span");
+      // realFeel.setAttribute("class", "tenpx");
+      // realFeel.innerText = `Feels like ${feels_like}\u00B0c`;
+      // min_max.appendChild(realFeel);
       let minTemp = document.createElement("span");
       minTemp.setAttribute("class", "tenpx");
       minTemp.innerText = `Min Temperature: ${temp_min}\u00B0c`;
@@ -225,6 +245,16 @@ async function fetch_weather() {
       humidity_.innerText = `Humidity: ${data.main.humidity}%`;
       min_max.appendChild(humidity_);
       weather_info.appendChild(min_max);
+      if (localStorage.getItem("username")) {
+        // when user is logged in - it will display add to favorite button
+        let add_to_fav = document.createElement("span");
+        let add_to_fav_btn = document.createElement("button");
+        add_to_fav_btn.innerText = "Add to Favorite";
+        add_to_fav.setAttribute("type", "button");
+        add_to_fav.setAttribute("id", "add_to_fav_btn");
+        add_to_fav.appendChild(add_to_fav_btn);
+        weather_info.appendChild(add_to_fav);
+      }
     } else {
       let city_not_found = document.createElement("p");
       city_not_found.setAttribute("id", "city_not_found");
