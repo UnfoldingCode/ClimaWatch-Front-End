@@ -4,7 +4,7 @@ let weather_info = document.querySelector("#weather_info");
 let inputBox = document.querySelector("#city");
 let log_out_tab = document.querySelector("#sign_out");
 let user_info = document.querySelector("#user_info");
-let user_logged_in;
+let user_logged_in; // to grab the name of the user
 
 //****************************            Sign in Anchor Tab start           *********************************/
 let signinTab = document.querySelector("#sign_in");
@@ -38,6 +38,7 @@ if (localStorage.getItem("username")) {
   signinForm.reset();
   signinForm.style.display = "none";
   log_out_tab.style.display = "inline";
+  user_logged_in = localStorage.getItem("username");
   user_info.innerHTML = `${user_logged_in}, Welcome to ClimaWatch !!! `;
 }
 
