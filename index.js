@@ -246,6 +246,11 @@ async function fetch_weather() {
         add_to_fav.setAttribute("id", "add_to_fav_btn");
         add_to_fav.appendChild(add_to_fav_btn);
         weather_info.appendChild(add_to_fav);
+        add_to_fav_btn.addEventListener("click", () => {
+          city = `${data.name}, ${data.sys.country}`;
+          // api = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=e572668bb21fee7042efec77137cc15c`;
+          console.log(`Hey you have added ${city} into your favorite list`);
+        });
       }
     } else {
       let city_not_found = document.createElement("p");
