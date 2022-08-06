@@ -40,6 +40,7 @@ if (localStorage.getItem("username")) {
   log_out_tab.style.display = "inline";
   user_logged_in = localStorage.getItem("username");
   user_info.innerHTML = `${user_logged_in}, Welcome to ClimaWatch !!! `;
+
   // let add_to_fav = document.createElement("span");
   // let add_to_fav_btn = document.createElement("button");
   // add_to_fav.setAttribute("type", "button");
@@ -238,7 +239,7 @@ async function fetch_weather() {
 
       // weather_info.appendChild(min_max);
       if (localStorage.getItem("username")) {
-        // when user is logged in - it will display add to favorite button
+        // ******************************** when user is logged in - it will display add to favorite button *************************************/
         let add_to_fav = document.createElement("span");
         let add_to_fav_btn = document.createElement("button");
         add_to_fav_btn.innerText = "Add to Favorite";
@@ -250,6 +251,8 @@ async function fetch_weather() {
           city = `${data.name}, ${data.sys.country}`;
           // api = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=e572668bb21fee7042efec77137cc15c`;
           console.log(`Hey you have added ${city} into your favorite list`);
+          let location_table = document.querySelector("#table");
+          location_table.style.display = "block";
         });
       }
     } else {

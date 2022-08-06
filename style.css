@@ -127,7 +127,11 @@ none{
   display: none;
 }
 
-/* News Section */
+#table{
+  display: none;
+}
+
+/******************************************************* News Section *****************************************************/
 
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,100,900);
 
