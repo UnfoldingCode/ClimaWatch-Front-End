@@ -32,14 +32,14 @@ let joinNow_password;
 //****************************            Join Now/Registration   End         *********************************/
 
 //******************************** if user is logged in  start ***************************
-let logged_username = localStorage.getItem("username");
-if (logged_username) {
+let logged_name = localStorage.getItem("name");
+if (logged_name) {
   joinNowTab.style.display = "none";
   signinTab.style.display = "none";
   signinForm.reset();
   signinForm.style.display = "none";
   log_out_tab.style.display = "inline";
-  user_logged_in = localStorage.getItem("username");
+  user_logged_in = localStorage.getItem("name");
   user_info.innerHTML = `${user_logged_in}, Welcome to ClimaWatch !!! `;
 
   // let add_to_fav = document.createElement("span");
@@ -240,7 +240,7 @@ async function fetch_weather() {
       weather_info.appendChild(humidity_);
 
       // weather_info.appendChild(min_max);
-      if (localStorage.getItem("username")) {
+      if (localStorage.getItem("name")) {
         // ******************************** when user is logged in - it will display add to favorite button *************************************/
         let add_to_fav = document.createElement("span");
         let add_to_fav_btn = document.createElement("button");
@@ -260,6 +260,30 @@ async function fetch_weather() {
           // t_body.appendChild(t_row);
         });
         console.log(city);
+
+        add_to_fav_btn.addEventListener("click", add_location);
+
+        async function add_location() {
+          let res = await fetch(
+            `http://127.0.0.1:2022/locations/${localStorage.getItem(
+              "username"
+            )}`,
+            {
+              method: "POST",
+              credentials: "include",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                location: city,
+              }),
+            }
+          );
+          let data = await res.text();
+          if (res.status == 200) {
+            console.log(data);
+          }
+        }
       }
     } else {
       let city_not_found = document.createElement("p");
@@ -382,9 +406,11 @@ async function sign_in_by_user() {
   });
   let data = await res.json();
   let name = data["users"][0]["name"];
+  let user_name = data["users"][0]["username"];
   console.log(`${name} logged in`);
   if (res.status == 200) {
-    localStorage.setItem("username", name);
+    localStorage.setItem("name", name);
+    localStorage.setItem("username", user_name);
 
     user_logged_in = localStorage.getItem("username");
     console.log(user_logged_in);
@@ -424,19 +450,19 @@ log_out_tab.addEventListener("click", logout);
 //****************************     Logout tab event listener ******** end           *********************************/
 
 //***********************Fetch Post request to add a location to favorite */
-async function add_location() {
-  let res = await fetch(`http://127.0.0.1:2022/locations/kareem11`, {
-    method: "POST",
-    credentials: "include",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      username: joinNow_username,
-      name: joinNow_name,
-      email: joinNow_email,
-      password: joinNow_password,
-    }),
-  });
-  let data = await res.text();
-}
+// async function add_location() {
+//   let res = await fetch(`http://127.0.0.1:2022/locations/${logged_username}`, {
+//     method: "POST",
+//     credentials: "include",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify({
+//       location: "Birtamod",
+//     }),
+//   });
+//   let data = await res.text();
+//   if (res.status == 200) {
+//     console.log(data);
+//   }
+// }
