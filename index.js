@@ -203,48 +203,40 @@ async function fetch_weather() {
         "src",
         `http://openweathermap.org/img/wn/${icon}@2x.png`
       );
-      location.appendChild(weather_icon);
+      weather_info.appendChild(weather_icon);
 
       let weather_description = document.createElement("span");
       weather_description.setAttribute("class", "tenpx");
       weather_description.innerText = description;
-      location.appendChild(weather_description);
+      weather_info.appendChild(weather_description);
 
       let temp_current = document.createElement("span");
       temp_current.setAttribute("class", "tenpx");
       temp_current.innerText = `${temp}\u00B0c`;
-      location.appendChild(temp_current);
+      weather_info.appendChild(temp_current);
 
       let realFeel = document.createElement("span");
       realFeel.setAttribute("class", "tenpx");
       realFeel.innerText = `Feels like ${feels_like}\u00B0c`;
-      location.appendChild(realFeel);
+      weather_info.appendChild(realFeel);
 
-      // let weather_icon = document.createElement("img");
-      // weather_icon.setAttribute(
-      //   "src",
-      //   `http://openweathermap.org/img/wn/${icon}@2x.png`
-      // );
-      // weather_info.appendChild(weather_icon);
-
-      let min_max = document.createElement("span");
-      // let realFeel = document.createElement("span");
-      // realFeel.setAttribute("class", "tenpx");
-      // realFeel.innerText = `Feels like ${feels_like}\u00B0c`;
-      // min_max.appendChild(realFeel);
+      // let min_max = document.createElement("span");
       let minTemp = document.createElement("span");
       minTemp.setAttribute("class", "tenpx");
-      minTemp.innerText = `Min Temperature: ${temp_min}\u00B0c`;
-      min_max.appendChild(minTemp);
+      minTemp.innerText = `Min Temp: ${temp_min}\u00B0c`;
+      weather_info.appendChild(minTemp);
+
       let maxTemp = document.createElement("span");
       maxTemp.setAttribute("class", "tenpx");
-      maxTemp.innerText = `Max Temperature: ${temp_max}\u00B0c`;
-      min_max.appendChild(maxTemp);
+      maxTemp.innerText = `Max Temp: ${temp_max}\u00B0c`;
+      weather_info.appendChild(maxTemp);
+
       let humidity_ = document.createElement("span");
       humidity_.setAttribute("class", "tenpx");
       humidity_.innerText = `Humidity: ${data.main.humidity}%`;
-      min_max.appendChild(humidity_);
-      weather_info.appendChild(min_max);
+      weather_info.appendChild(humidity_);
+
+      // weather_info.appendChild(min_max);
       if (localStorage.getItem("username")) {
         // when user is logged in - it will display add to favorite button
         let add_to_fav = document.createElement("span");
