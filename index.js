@@ -32,14 +32,22 @@ let joinNow_password;
 //****************************            Join Now/Registration   End         *********************************/
 
 //******************************** if user is logged in  start ***************************
-if (localStorage.getItem("username")) {
+let logged_name = localStorage.getItem("name");
+if (logged_name) {
   joinNowTab.style.display = "none";
   signinTab.style.display = "none";
   signinForm.reset();
   signinForm.style.display = "none";
   log_out_tab.style.display = "inline";
-  user_logged_in = localStorage.getItem("username");
+  user_logged_in = localStorage.getItem("name");
   user_info.innerHTML = `${user_logged_in}, Welcome to ClimaWatch !!! `;
+
+  // let add_to_fav = document.createElement("span");
+  // let add_to_fav_btn = document.createElement("button");
+  // add_to_fav.setAttribute("type", "button");
+  // add_to_fav.setAttribute("id", "add_to_fav_btn");
+  // add_to_fav.appendChild(add_to_fav_btn);
+  // weather_info.appendChild(add_to_fav);
 }
 
 //******************************** if user is logged in end ***************************
@@ -187,19 +195,11 @@ async function fetch_weather() {
       } else {
         weather_info.setAttribute("class", "none");
       }
-      let location = document.createElement("p");
+      let location = document.createElement("span");
       location.setAttribute("class", "tenpx");
       location.innerText = `${data.name}, ${data.sys.country}`;
+      let city = location.innerText;
       weather_info.appendChild(location);
-
-      let weather_description = document.createElement("span");
-      weather_description.setAttribute("class", "tenpx");
-      weather_description.innerText = description;
-      location.appendChild(weather_description);
-      let temp_current = document.createElement("span");
-      temp_current.setAttribute("class", "tenpx");
-      temp_current.innerText = `${temp}\u00B0c`;
-      location.appendChild(temp_current);
 
       let weather_icon = document.createElement("img");
       weather_icon.setAttribute(
@@ -207,24 +207,84 @@ async function fetch_weather() {
         `http://openweathermap.org/img/wn/${icon}@2x.png`
       );
       weather_info.appendChild(weather_icon);
-      let min_max = document.createElement("div");
+
+      let weather_description = document.createElement("span");
+      weather_description.setAttribute("class", "tenpx");
+      weather_description.innerText = description;
+      weather_info.appendChild(weather_description);
+
+      let temp_current = document.createElement("span");
+      temp_current.setAttribute("class", "tenpx");
+      temp_current.innerText = `${temp}\u00B0c`;
+      weather_info.appendChild(temp_current);
+
       let realFeel = document.createElement("span");
       realFeel.setAttribute("class", "tenpx");
       realFeel.innerText = `Feels like ${feels_like}\u00B0c`;
-      min_max.appendChild(realFeel);
+      weather_info.appendChild(realFeel);
+
+      // let min_max = document.createElement("span");
       let minTemp = document.createElement("span");
       minTemp.setAttribute("class", "tenpx");
-      minTemp.innerText = `Min Temperature: ${temp_min}\u00B0c`;
-      min_max.appendChild(minTemp);
+      minTemp.innerText = `Min Temp: ${temp_min}\u00B0c`;
+      weather_info.appendChild(minTemp);
+
       let maxTemp = document.createElement("span");
       maxTemp.setAttribute("class", "tenpx");
-      maxTemp.innerText = `Max Temperature: ${temp_max}\u00B0c`;
-      min_max.appendChild(maxTemp);
+      maxTemp.innerText = `Max Temp: ${temp_max}\u00B0c`;
+      weather_info.appendChild(maxTemp);
+
       let humidity_ = document.createElement("span");
       humidity_.setAttribute("class", "tenpx");
       humidity_.innerText = `Humidity: ${data.main.humidity}%`;
-      min_max.appendChild(humidity_);
-      weather_info.appendChild(min_max);
+      weather_info.appendChild(humidity_);
+
+      // weather_info.appendChild(min_max);
+      if (localStorage.getItem("name")) {
+        // ******************************** when user is logged in - it will display add to favorite button *************************************/
+        let add_to_fav = document.createElement("span");
+        let add_to_fav_btn = document.createElement("button");
+        add_to_fav_btn.innerText = "Add to Favorite";
+        add_to_fav.setAttribute("type", "button");
+        add_to_fav.setAttribute("id", "add_to_fav_btn");
+        add_to_fav.appendChild(add_to_fav_btn);
+        weather_info.appendChild(add_to_fav);
+        add_to_fav_btn.addEventListener("click", () => {
+          // city = `${data.name}, ${data.sys.country}`;
+          // api = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=e572668bb21fee7042efec77137cc15c`;
+          console.log(`Hey you have added ${city} into your favorite list`);
+          let location_table = document.querySelector("#table");
+          location_table.style.display = "block";
+          // let t_body = document.querySelector("#t_body");
+          // let t_row = document.createComment("tr");
+          // t_body.appendChild(t_row);
+        });
+        console.log(city);
+
+        add_to_fav_btn.addEventListener("click", add_location);
+
+        async function add_location() {
+          let res = await fetch(
+            `http://127.0.0.1:2022/locations/${localStorage.getItem(
+              "username"
+            )}`,
+            {
+              method: "POST",
+              credentials: "include",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                location: city,
+              }),
+            }
+          );
+          let data = await res.text();
+          if (res.status == 200) {
+            console.log(data);
+          }
+        }
+      }
     } else {
       let city_not_found = document.createElement("p");
       city_not_found.setAttribute("id", "city_not_found");
@@ -346,9 +406,11 @@ async function sign_in_by_user() {
   });
   let data = await res.json();
   let name = data["users"][0]["name"];
+  let user_name = data["users"][0]["username"];
   console.log(`${name} logged in`);
   if (res.status == 200) {
-    localStorage.setItem("username", name);
+    localStorage.setItem("name", name);
+    localStorage.setItem("username", user_name);
 
     user_logged_in = localStorage.getItem("username");
     console.log(user_logged_in);
@@ -386,3 +448,21 @@ async function logout() {
 log_out_tab.addEventListener("click", logout);
 
 //****************************     Logout tab event listener ******** end           *********************************/
+
+//***********************Fetch Post request to add a location to favorite */
+// async function add_location() {
+//   let res = await fetch(`http://127.0.0.1:2022/locations/${logged_username}`, {
+//     method: "POST",
+//     credentials: "include",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify({
+//       location: "Birtamod",
+//     }),
+//   });
+//   let data = await res.text();
+//   if (res.status == 200) {
+//     console.log(data);
+//   }
+// }
