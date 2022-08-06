@@ -306,24 +306,18 @@ async function fetch_weather() {
             }
             console.log(city_array);
             let t_body = document.querySelector("#t_body");
-            // let t_row = document.createElement("tr");
-            create_table(city_array);
 
-            // for (let i = 0; i < city_array.length; i++) {
-            //   api = `https://api.openweathermap.org/data/2.5/weather?q=${city_array[i]}&units=metric&appid=e572668bb21fee7042efec77137cc15c`;
-            //   // let t_body = document.querySelector("#t_body");
-            //   // let t_row = document.createComment("tr");
-            //   // t_body.appendChild(t_row);
-            //   // let s_num = document.createComment
-            //   send_api_request(api);
-            //   async function send_api_request(api) {
-            //     let res = await fetch(api);
-            //     let data = await res.json();
-            //     if (res.status == 200) {
-            //       console.log(data);
-            //     }
-            //   }
-            // }
+            for (let i = 0; i < city_array.length; i++) {
+              api = `https://api.openweathermap.org/data/2.5/weather?q=${city_array[i]}&units=metric&appid=e572668bb21fee7042efec77137cc15c`;
+              send_api_request(api);
+              async function send_api_request(api) {
+                let res = await fetch(api);
+                let data = await res.json();
+                if (res.status == 200) {
+                  create_table();
+                }
+              }
+            }
           }
         }
       }
@@ -492,39 +486,46 @@ log_out_tab.addEventListener("click", logout);
 //****************************     Logout tab event listener ******** end           *********************************/
 
 //***********************Function to create table of locations */
-function create_table(arr) {
-  for (let elm of arr) {
-    // let t_body = document.querySelector("#t_body");
-    let t_row = document.createElement("tr");
+function create_table() {
+  // for (let elm of arr) {
+  let t_row = document.createElement("tr");
 
-    let s_1 = document.createElement("td");
-    s_1.innerText = "orange";
-    t_row.appendChild(s_1);
+  let s_num = document.createElement("td");
+  s_num.innerText = "kapala";
+  t_row.appendChild(s_num);
 
-    let s_2 = document.createElement("td");
-    s_2.innerText = "ball";
-    t_row.appendChild(s_2);
-    let s_3 = document.createElement("td");
-    s_3.innerText = "cat";
-    t_row.appendChild(s_3);
-    let s_4 = document.createElement("td");
-    s_4.innerText = "dog";
-    t_row.appendChild(s_4);
-    let s_5 = document.createElement("td");
-    s_5.innerText = "egg";
-    t_row.appendChild(s_5);
-    let s_6 = document.createElement("td");
-    s_6.innerText = "fish";
-    t_row.appendChild(s_6);
-    let s_7 = document.createElement("td");
-    s_7.innerText = "grass";
-    t_row.appendChild(s_7);
-    let s_8 = document.createElement("td");
-    s_8.innerText = "horse";
-    t_row.appendChild(s_8);
-    let s_9 = document.createElement("td");
-    s_9.innerText = "ink";
-    t_row.appendChild(s_9);
-    t_body.appendChild(t_row);
-  }
+  let fav_location = document.createElement("td");
+  fav_location.innerText = "ball";
+  t_row.appendChild(fav_location);
+
+  let descrip = document.createElement("td");
+  descrip.innerText = "cat";
+  t_row.appendChild(descrip);
+
+  let temp = document.createElement("td");
+  temp.innerText = "dog";
+  t_row.appendChild(temp);
+
+  let feels = document.createElement("td");
+  feels.innerText = "egg";
+  t_row.appendChild(feels);
+
+  let min_temp = document.createElement("td");
+  min_temp.innerText = "fish";
+  t_row.appendChild(min_temp);
+
+  let max_temp = document.createElement("td");
+  max_temp.innerText = "grass";
+  t_row.appendChild(max_temp);
+
+  let humidity = document.createElement("td");
+  humidity.innerText = "horse";
+  t_row.appendChild(humidity);
+
+  let remove_fav = document.createElement("td");
+  remove_fav.innerText = "ink";
+  t_row.appendChild(remove_fav);
+
+  t_body.appendChild(t_row);
 }
+// }
