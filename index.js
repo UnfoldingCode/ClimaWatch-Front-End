@@ -3,8 +3,10 @@ let location_button = document.querySelector("#my_location");
 let weather_info = document.querySelector("#weather_info");
 let inputBox = document.querySelector("#city");
 let log_out_tab = document.querySelector("#sign_out");
+let user_info = document.querySelector("#user_info");
+let user_logged_in;
 
-//****************************            Sign in Anchor Tab begining           *********************************/
+//****************************            Sign in Anchor Tab start           *********************************/
 let signinTab = document.querySelector("#sign_in");
 let signinForm = document.querySelector("#signin_form");
 let signin_username_input = document.querySelector("#user_name");
@@ -12,7 +14,7 @@ let signin_password_input = document.querySelector("#user_password");
 let signin_btn_submit = document.querySelector("#signin_btn");
 //****************************            Sign in   Anchor Tab End        *********************************/
 
-//****************************            Join Now/Registration            *********************************/
+//****************************            Join Now/Registration     Start       *********************************/
 let message_after_registration = document.querySelector(
   "#message_after_registration"
 );
@@ -27,20 +29,23 @@ let joinNow_username;
 let joinNow_name;
 let joinNow_email;
 let joinNow_password;
-//****************************            Join Now/Registration            *********************************/
+//****************************            Join Now/Registration   End         *********************************/
 
-//******************************** if user is logged in ***************************
+//******************************** if user is logged in  start ***************************
 if (sessionStorage.getItem("username")) {
   joinNowTab.style.display = "none";
   signinTab.style.display = "none";
   signinForm.reset();
   signinForm.style.display = "none";
-  log_out_tab.style.display = "inline-block";
+  log_out_tab.style.display = "inline";
+  user_info.innerHTML = `${user_logged_in}, Welcome to ClimaWatch !!! `;
 }
+
+//******************************** if user is logged in end ***************************
 
 let api;
 
-//****************************            When hit Enter            *********************************/
+//****************************            When hit Enter       Start     *********************************/
 inputBox.addEventListener("keyup", (e) => {
   if (e.key == "Enter") {
     e.preventDefault();
@@ -54,9 +59,9 @@ function requestApi(inputVal) {
 `;
   fetch_weather();
 }
-//****************************            When hit Enter            *********************************/
+//****************************            When hit Enter        End    *********************************/
 
-//****************************            clock             *********************************/
+//****************************            clock         Start    *********************************/
 function currentTime() {
   let date = new Date();
   let hh = date.getHours();
@@ -85,9 +90,9 @@ function currentTime() {
 }
 
 currentTime();
-//****************************            clock             *********************************/
+//****************************            clock          End   *********************************/
 
-//****** Using HTML Geolocation - The getCurrentPosition() method is used to return the user's position.    */
+//****** Using HTML Geolocation - The getCurrentPosition() method is used to return the user's position.    Start */
 //***    https://www.w3schools.com/html/html5_geolocation.asp    */
 
 location_button.addEventListener("click", () => {
@@ -112,9 +117,9 @@ function showPosition(position) {
 `;
   fetch_weather();
 }
-//****** Using HTML Geolocation - The getCurrentPosition() method is used to return the user's position.    */
+//****** Using HTML Geolocation - The getCurrentPosition() method is used to return the user's position.  End   */
 
-//********* Loader *************/
+//********* Loader    Start *************/
 
 let loader = document.querySelector("#loading");
 
@@ -133,7 +138,7 @@ function hideLoading() {
   console.log("unLoader");
 }
 
-//********* Loader *************/
+//********* Loader        End  *************/
 
 search_button.addEventListener("click", () => {
   displayLoading();
@@ -253,7 +258,7 @@ signinTab.addEventListener("click", () => {
   console.log("Sign in clicked");
 });
 
-//****************************     Join Now submit button ******** beginning           *********************************/
+//****************************     Join Now submit button ******** Start           *********************************/
 
 joinNow_btn_submit.addEventListener("click", (e) => {
   e.preventDefault();
@@ -319,12 +324,13 @@ signin_btn_submit.addEventListener("click", (e) => {
 });
 
 //****************************     Sign in button grabbing username and value ******** end           *********************************/
-//****************************     Sign in button sending fetch request ******** beginning           *********************************/
+
+//****************************     Sign in button sending fetch request ******** start           *********************************/
 signin_btn_submit.addEventListener("click", sign_in_by_user);
 
 //****************************     Sign in button sending fetch request ******** end           *********************************/
 
-//****************************     Function to send sign in post request to backend ******** beginning           *********************************/
+//****************************     Function to send sign in post request to backend ******** start           *********************************/
 async function sign_in_by_user() {
   let res = await fetch(`http://127.0.0.1:2022/login`, {
     method: "POST",
@@ -343,17 +349,21 @@ async function sign_in_by_user() {
   if (res.status == 200) {
     sessionStorage.setItem("username", name);
 
-    let user_logged_in = sessionStorage.getItem("username");
+    user_logged_in = sessionStorage.getItem("username");
     console.log(user_logged_in);
     if (user_logged_in) {
       joinNowTab.style.display = "none";
       signinTab.style.display = "none";
       signinForm.reset();
       signinForm.style.display = "none";
-      log_out_tab.style.display = "inline-block";
+      log_out_tab.style.display = "inline";
+      user_info.innerHTML = `${user_logged_in}, Welcome to ClimaWatch !!! `;
     }
   }
 }
+//****************************     Function to send sign in post request to backend ******** end           *********************************/
+
+//****************************     Function to send logout request to backend ******** start           *********************************/
 
 async function logout() {
   let res = await fetch(`http://127.0.0.1:2022/logout`, {
@@ -367,4 +377,10 @@ async function logout() {
   }
 }
 
+//****************************     Function to send logout request to backend ******** end           *********************************/
+
+//****************************     Logout tab event listener ******** start           *********************************/
+
 log_out_tab.addEventListener("click", logout);
+
+//****************************     Logout tab event listener ******** end           *********************************/
