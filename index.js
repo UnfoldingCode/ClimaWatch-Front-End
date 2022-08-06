@@ -32,7 +32,7 @@ let joinNow_password;
 //****************************            Join Now/Registration   End         *********************************/
 
 //******************************** if user is logged in  start ***************************
-if (sessionStorage.getItem("username")) {
+if (localStorage.getItem("username")) {
   joinNowTab.style.display = "none";
   signinTab.style.display = "none";
   signinForm.reset();
@@ -347,9 +347,9 @@ async function sign_in_by_user() {
   let name = data["users"][0]["name"];
   console.log(`${name} logged in`);
   if (res.status == 200) {
-    sessionStorage.setItem("username", name);
+    localStorage.setItem("username", name);
 
-    user_logged_in = sessionStorage.getItem("username");
+    user_logged_in = localStorage.getItem("username");
     console.log(user_logged_in);
     if (user_logged_in) {
       joinNowTab.style.display = "none";
@@ -372,6 +372,7 @@ async function logout() {
   let data = await res.json();
   let message = data["message"];
   if (res.status == 200) {
+    localStorage.clear();
     sessionStorage.clear();
     window.location.href = "./index.html";
   }
