@@ -787,7 +787,7 @@ async function fetch_news() {
   thirdcolumn.innerHTML = "";
   try {
     let re = await fetch(
-      `https://newsdata.io/api/1/news?apikey=pub_9879923018ce89b9bb0bdf501694d53d3789&language=fr,en`
+      `https://newsdata.io/api/1/news?apikey=pub_9879923018ce89b9bb0bdf501694d53d3789&language=en`
     );
     newsData = await re.json();
     if (re.status == 200) {
