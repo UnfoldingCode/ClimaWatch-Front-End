@@ -6,6 +6,15 @@ let log_out_tab = document.querySelector("#sign_out");
 let user_info = document.querySelector("#user_info");
 let user_logged_in; // to grab the name of the user
 
+//***************************    NEWS ***********************/
+let firstcolumn = document.querySelector("#card1");
+let firstcard = document.querySelector("#card1");
+let secondcard = document.querySelector("#card2");
+let thirdcard = document.querySelector("#card3");
+let secondcolumn = document.querySelector("#card2");
+let thirdcolumn = document.querySelector("#card3");
+window.addEventListener("load", fetch_news);
+
 //****************************            Sign in Anchor Tab start           *********************************/
 let signinTab = document.querySelector("#sign_in");
 let signinForm = document.querySelector("#signin_form");
@@ -344,7 +353,7 @@ async function fetch_weather() {
         // ******************************** when user is logged in - it will display add to favorite button *************************************/
         let add_to_fav = document.createElement("span");
         let add_to_fav_btn = document.createElement("button");
-        add_to_fav_btn.innerText = "Add to Favorite";
+        add_to_fav_btn.innerText = "Add to Favorite Location";
         add_to_fav.setAttribute("type", "button");
         add_to_fav.setAttribute("id", "add_to_fav_btn");
         add_to_fav.appendChild(add_to_fav_btn);
@@ -739,12 +748,12 @@ async function sign_in_by_user() {
       }
     }
   }
-  let unfav_btn = document.getElementById(`#${data.name}, ${data.sys.country}`);
+  // let unfav_btn = document.getElementById(`#${data.name}, ${data.sys.country}`);
 
-  unfav_btn.addEventListener("click", (e) => {
-    e.preventDefault();
-    console.log(`${data.name}, ${data.sys.country}`);
-  });
+  // unfav_btn.addEventListener("click", (e) => {
+  //   e.preventDefault();
+  //   console.log(`${data.name}, ${data.sys.country}`);
+  // });
 }
 //****************************     Function to send sign in post request to backend ******** end           *********************************/
 
@@ -770,3 +779,131 @@ async function logout() {
 log_out_tab.addEventListener("click", logout);
 
 //****************************     Logout tab event listener ******** end           *********************************/
+
+// *************************** News API Call *********************
+async function fetch_news() {
+  firstcolumn.innerHTML = "";
+  secondcolumn.innerHTML = "";
+  thirdcolumn.innerHTML = "";
+  try {
+    let re = await fetch(
+      `https://newsdata.io/api/1/news?apikey=pub_9879923018ce89b9bb0bdf501694d53d3789&language=fr,en`
+    );
+    newsData = await re.json();
+    if (re.status == 200) {
+      let Image = [];
+      let Title = [];
+      let Descript = [];
+      let links = [];
+      for (let l = 0; l < 3; l++) {
+        if (newsData.results[l].image_url == null) {
+          Image.push("");
+        } else {
+          Image.push(newsData.results[l].image_url);
+        }
+        Title.push(newsData.results[l].title);
+        Descript.push(newsData.results[l].description);
+        links.push(newsData.results[l].link);
+      }
+
+      if (Image[0] == "") {
+        console.log("No First Column Image");
+      } else {
+        let pictureone = document.createElement("img");
+        pictureone.setAttribute("src", `${Image[0]}`);
+        firstcard.appendChild(pictureone);
+      }
+
+      if (Image[1] == "") {
+        console.log("No Second Column Image");
+      } else {
+        let picturetwo = document.createElement("img");
+        picturetwo.setAttribute("src", `${Image[1]}`);
+        secondcard.appendChild(picturetwo);
+      }
+
+      if (Image[2] == "") {
+        console.log("No Third Column Image");
+      } else {
+        let picturethree = document.createElement("img");
+        picturethree.setAttribute("src", `${Image[2]}`);
+        thirdcard.appendChild(picturethree);
+      }
+
+      let titleDivOne = document.createElement("div");
+      titleDivOne.setAttribute("class", "card-content");
+      let newsTitleOne = document.createElement("h4");
+      newsTitleOne.setAttribute("class", "card-title");
+      newsTitleOne.innerText = Title[0];
+      titleDivOne.appendChild(newsTitleOne);
+
+      let titleDivTwo = document.createElement("div");
+      titleDivTwo.setAttribute("class", "card-content");
+      let newsTitleTwo = document.createElement("h4");
+      newsTitleTwo.setAttribute("class", "card-title");
+      newsTitleTwo.innerText = Title[1];
+      titleDivTwo.appendChild(newsTitleTwo);
+
+      let titleDivThree = document.createElement("div");
+      titleDivThree.setAttribute("class", "card-content");
+      let newsTitleThree = document.createElement("h4");
+      newsTitleThree.setAttribute("class", "card-title");
+      newsTitleThree.innerText = Title[2];
+      titleDivThree.appendChild(newsTitleThree);
+
+      let descDivOne = document.createElement("div");
+      descDivOne.setAttribute("class", "card-content");
+      let newsDescriptionOne = document.createElement("p");
+      newsDescriptionOne.setAttribute("class", "Desc1");
+      newsDescriptionOne.innerText = Descript[0];
+      titleDivOne.appendChild(newsDescriptionOne);
+      firstcolumn.appendChild(titleDivOne);
+
+      let descDivTwo = document.createElement("div");
+      descDivTwo.setAttribute("class", "card-content");
+      let newsDescriptionTwo = document.createElement("p");
+      newsDescriptionTwo.setAttribute("class", "Desc2");
+      newsDescriptionTwo.innerText = Descript[1];
+      titleDivTwo.appendChild(newsDescriptionTwo);
+      secondcolumn.appendChild(titleDivTwo);
+
+      let descDivThree = document.createElement("div");
+      descDivThree.setAttribute("class", "card-content");
+      let newsDescriptionThree = document.createElement("p");
+      newsDescriptionThree.setAttribute("class", "Desc3");
+      newsDescriptionThree.innerText = Descript[2];
+      titleDivThree.appendChild(newsDescriptionThree);
+      thirdcolumn.appendChild(titleDivThree);
+
+      let readMoreDivtt = document.createElement("div");
+      readMoreDivtt.setAttribute("class", "card-content");
+      let readMoreOne = document.createElement("a");
+      readMoreDivtt.setAttribute("class", "card-read-more");
+      readMoreOne.setAttribute("href", `${links[0]}`);
+      readMoreOne.setAttribute("target", "_blank");
+      readMoreOne.innerText = "Read-More";
+      readMoreDivtt.appendChild(readMoreOne);
+      firstcolumn.appendChild(readMoreDivtt);
+
+      let readMoreDivt = document.createElement("div");
+      readMoreDivt.setAttribute("class", "card-content");
+      let readMoreTwo = document.createElement("a");
+      readMoreDivt.setAttribute("class", "card-read-more");
+      readMoreTwo.setAttribute("href", `${links[1]}`);
+      readMoreTwo.setAttribute("target", "_blank");
+      readMoreTwo.innerText = "Read-More";
+      readMoreDivt.appendChild(readMoreTwo);
+      secondcolumn.appendChild(readMoreDivt);
+
+      let readMoreDivo = document.createElement("div");
+      readMoreDivo.setAttribute("class", "card-content");
+      let readMoreThree = document.createElement("a");
+      readMoreDivo.setAttribute("class", "card-read-more");
+      readMoreThree.setAttribute("href", `${links[2]}`);
+      readMoreThree.setAttribute("target", "_blank");
+      readMoreThree.innerText = "Read-More";
+      readMoreDivo.appendChild(readMoreThree);
+      thirdcolumn.appendChild(readMoreDivo);
+    }
+  } catch {}
+}
