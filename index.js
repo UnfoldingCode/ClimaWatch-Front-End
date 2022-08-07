@@ -106,7 +106,11 @@ window.addEventListener("load", () => {
             t_row.appendChild(humidity);
 
             let remove_fav = document.createElement("td");
-            remove_fav.innerText = "ink";
+            let remove_btn = document.createElement("button");
+            remove_btn.setAttribute("type", "button");
+            remove_btn.setAttribute("id", `${data.name}, ${data.sys.country}`);
+            remove_btn.innerText = "Remove Favorite";
+            remove_fav.appendChild(remove_btn);
             t_row.appendChild(remove_fav);
 
             t_body.appendChild(t_row);
@@ -415,7 +419,14 @@ async function fetch_weather() {
                   t_row.appendChild(humidity);
 
                   let remove_fav = document.createElement("td");
-                  remove_fav.innerText = "ink";
+                  let remove_btn = document.createElement("button");
+                  remove_btn.setAttribute("type", "button");
+                  remove_btn.setAttribute(
+                    "id",
+                    `${data.name}, ${data.sys.country}`
+                  );
+                  remove_btn.innerText = "Remove Favorite";
+                  remove_fav.appendChild(remove_btn);
                   t_row.appendChild(remove_fav);
 
                   t_body.appendChild(t_row);
@@ -623,7 +634,14 @@ async function sign_in_by_user() {
                 t_row.appendChild(humidity);
 
                 let remove_fav = document.createElement("td");
-                remove_fav.innerText = "ink";
+                let remove_btn = document.createElement("button");
+                remove_btn.setAttribute("type", "button");
+                remove_btn.setAttribute(
+                  "id",
+                  `${data.name}, ${data.sys.country}`
+                );
+                remove_btn.innerText = "Remove Favorite";
+                remove_fav.appendChild(remove_btn);
                 t_row.appendChild(remove_fav);
 
                 t_body.appendChild(t_row);
