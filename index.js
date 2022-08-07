@@ -11,7 +11,6 @@ let thirdcard = document.querySelector('#card3');
 let secondcolumn = document.querySelector('#card2');
 let thirdcolumn = document.querySelector('#card3');
 let api;
-let newsApi;
 //****************************            When hit Enter            *********************************/
 inputBox.addEventListener("keyup", (e) => {
   if (e.key == "Enter") {
@@ -204,7 +203,7 @@ async function fetch_news() {
       let links = [];
       for(let l=0;l<3;l++){
         if(newsData.results[l].image_url==null){
-          Image.push("")
+          Image.push("");
         }else{
           Image.push(newsData.results[l].image_url);
         }
@@ -215,7 +214,7 @@ async function fetch_news() {
 
       
       if(Image[0]==""){
-        console.log("No First Column Image")
+        console.log("No First Column Image");
       }else{
         let pictureone = document.createElement("img");
         pictureone.setAttribute("src", `${Image[0]}`);
@@ -223,7 +222,7 @@ async function fetch_news() {
       }
 
       if(Image[1]==""){
-        console.log("No Second Column Image")
+        console.log("No Second Column Image");
       }else{
         let picturetwo = document.createElement("img");
         picturetwo.setAttribute("src", `${Image[1]}`);
@@ -231,7 +230,7 @@ async function fetch_news() {
       }
 
       if(Image[2]==""){
-        console.log("No Third Column Image")
+        console.log("No Third Column Image");
       }else{
         let picturethree = document.createElement("img");
         picturethree.setAttribute("src", `${Image[2]}`);
@@ -239,73 +238,76 @@ async function fetch_news() {
       }
 
       let titleDivOne = document.createElement("div");
-      titleDivOne.setAttribute("class", "card-content")
+      titleDivOne.setAttribute("class", "card-content");
       let newsTitleOne = document.createElement("h4");
       newsTitleOne.setAttribute("class", "card-title");
       newsTitleOne.innerText = Title[0];
       titleDivOne.appendChild(newsTitleOne);
 
       let titleDivTwo = document.createElement("div");
-      titleDivTwo.setAttribute("class", "card-content")
+      titleDivTwo.setAttribute("class", "card-content");
       let newsTitleTwo = document.createElement("h4");
       newsTitleTwo.setAttribute("class", "card-title");
       newsTitleTwo.innerText = Title[1];
       titleDivTwo.appendChild(newsTitleTwo);
 
       let titleDivThree = document.createElement("div");
-      titleDivThree.setAttribute("class", "card-content")
+      titleDivThree.setAttribute("class", "card-content");
       let newsTitleThree = document.createElement("h4");
       newsTitleThree.setAttribute("class", "card-title");
       newsTitleThree.innerText = Title[2];
-      titleDivThree.appendChild(newsTitleThree)
+      titleDivThree.appendChild(newsTitleThree);
 
       let descDivOne = document.createElement("div");
-      descDivOne.setAttribute("class", "card-content")
+      descDivOne.setAttribute("class", "card-content");
       let newsDescriptionOne = document.createElement("p");
       newsDescriptionOne.setAttribute("class", "Desc1");
       newsDescriptionOne.innerText = Descript[0];
-      titleDivOne.appendChild(newsDescriptionOne)
+      titleDivOne.appendChild(newsDescriptionOne);
       firstcolumn.appendChild(titleDivOne);
 
       let descDivTwo = document.createElement("div");
-      descDivTwo.setAttribute("class", "card-content")
+      descDivTwo.setAttribute("class", "card-content");
       let newsDescriptionTwo = document.createElement("p");
       newsDescriptionTwo.setAttribute("class", "Desc2");
       newsDescriptionTwo.innerText = Descript[1];
-      titleDivTwo.appendChild(newsDescriptionTwo)
+      titleDivTwo.appendChild(newsDescriptionTwo);
       secondcolumn.appendChild(titleDivTwo);
 
       let descDivThree = document.createElement("div");
-      descDivThree.setAttribute("class", "card-content")
+      descDivThree.setAttribute("class", "card-content");
       let newsDescriptionThree = document.createElement("p");
       newsDescriptionThree.setAttribute("class", "Desc3");
       newsDescriptionThree.innerText = Descript[2];
-      titleDivThree.appendChild(newsDescriptionThree)
+      titleDivThree.appendChild(newsDescriptionThree);
       thirdcolumn.appendChild(titleDivThree);
 
       let readMoreDivtt = document.createElement("div");
-      readMoreDivtt.setAttribute("class", "card-content")
-      let readMoreOne = document.createElement("a")
+      readMoreDivtt.setAttribute("class", "card-content");
+      let readMoreOne = document.createElement("a");
       readMoreDivtt.setAttribute("class", "card-read-more");
-      readMoreOne.setAttribute("href", `${links[0]}`)
+      readMoreOne.setAttribute("href", `${links[0]}`);
+      readMoreOne.setAttribute("target", "_blank");
       readMoreOne.innerText = "Read-More";
       readMoreDivtt.appendChild(readMoreOne);
       firstcolumn.appendChild(readMoreDivtt);
 
       let readMoreDivt = document.createElement("div");
-      readMoreDivt.setAttribute("class", "card-content")
-      let readMoreTwo = document.createElement("a")
+      readMoreDivt.setAttribute("class", "card-content");
+      let readMoreTwo = document.createElement("a");
       readMoreDivt.setAttribute("class", "card-read-more");
       readMoreTwo.setAttribute("href", `${links[1]}`);
+      readMoreTwo.setAttribute("target", "_blank");
       readMoreTwo.innerText = "Read-More";
       readMoreDivt.appendChild(readMoreTwo);
       secondcolumn.appendChild(readMoreDivt);
 
       let readMoreDivo = document.createElement("div");
-      readMoreDivo.setAttribute("class", "card-content")
+      readMoreDivo.setAttribute("class", "card-content");
       let readMoreThree = document.createElement("a");
       readMoreDivo.setAttribute("class", "card-read-more");
       readMoreThree.setAttribute("href", `${links[2]}`);
+      readMoreThree.setAttribute("target", "_blank");
       readMoreThree.innerText = "Read-More";
       readMoreDivo.appendChild(readMoreThree);
       thirdcolumn.appendChild(readMoreDivo);
