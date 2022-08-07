@@ -113,6 +113,35 @@ window.addEventListener("load", () => {
             remove_fav.appendChild(remove_btn);
             t_row.appendChild(remove_fav);
 
+            remove_btn.addEventListener("click", async (e) => {
+              e.preventDefault();
+              console.log(`${data.name}, ${data.sys.country}`);
+              let res = await fetch(
+                `http://127.0.0.1:2022/locations/${localStorage.getItem(
+                  "username"
+                )}`,
+                {
+                  credentials: "include",
+                  method: "DELETE",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                    location: `${data.name}, ${data.sys.country}`,
+                  }),
+                }
+              );
+              // let data = await res.text();
+              if (res.status == 200) {
+                let data = await res.text();
+                t_row.style.display = "none";
+                console.log(data);
+              } else {
+                let data = await res.json();
+                console.log(data);
+              }
+            });
+
             t_body.appendChild(t_row);
           }
         }
@@ -429,6 +458,35 @@ async function fetch_weather() {
                   remove_fav.appendChild(remove_btn);
                   t_row.appendChild(remove_fav);
 
+                  remove_btn.addEventListener("click", async (e) => {
+                    e.preventDefault();
+                    console.log(`${data.name}, ${data.sys.country}`);
+                    let res = await fetch(
+                      `http://127.0.0.1:2022/locations/${localStorage.getItem(
+                        "username"
+                      )}`,
+                      {
+                        credentials: "include",
+                        method: "DELETE",
+                        headers: {
+                          "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                          location: `${data.name}, ${data.sys.country}`,
+                        }),
+                      }
+                    );
+                    // let data = await res.text();
+                    if (res.status == 200) {
+                      let data = await res.text();
+                      t_row.style.display = "none";
+                      console.log(data);
+                    } else {
+                      let data = await res.json();
+                      console.log(data);
+                    }
+                  });
+
                   t_body.appendChild(t_row);
                 }
               }
@@ -644,6 +702,35 @@ async function sign_in_by_user() {
                 remove_fav.appendChild(remove_btn);
                 t_row.appendChild(remove_fav);
 
+                remove_btn.addEventListener("click", async (e) => {
+                  e.preventDefault();
+                  console.log(`${data.name}, ${data.sys.country}`);
+                  let res = await fetch(
+                    `http://127.0.0.1:2022/locations/${localStorage.getItem(
+                      "username"
+                    )}`,
+                    {
+                      credentials: "include",
+                      method: "DELETE",
+                      headers: {
+                        "Content-Type": "application/json",
+                      },
+                      body: JSON.stringify({
+                        location: `${data.name}, ${data.sys.country}`,
+                      }),
+                    }
+                  );
+                  // let data = await res.text();
+                  if (res.status == 200) {
+                    let data = await res.text();
+                    t_row.style.display = "none";
+                    console.log(data);
+                  } else {
+                    let data = await res.json();
+                    console.log(data);
+                  }
+                });
+
                 t_body.appendChild(t_row);
               }
             }
@@ -652,6 +739,12 @@ async function sign_in_by_user() {
       }
     }
   }
+  let unfav_btn = document.getElementById(`#${data.name}, ${data.sys.country}`);
+
+  unfav_btn.addEventListener("click", (e) => {
+    e.preventDefault();
+    console.log(`${data.name}, ${data.sys.country}`);
+  });
 }
 //****************************     Function to send sign in post request to backend ******** end           *********************************/
 
