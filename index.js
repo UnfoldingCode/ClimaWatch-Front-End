@@ -311,7 +311,7 @@ async function fetch_weather() {
       weather_info.appendChild(humidity_);
 
       // weather_info.appendChild(min_max);
-      if (localStorage.getItem("name")) {
+      if (localStorage.getItem("username")) {
         // ******************************** when user is logged in - it will display add to favorite button *************************************/
         let add_to_fav = document.createElement("span");
         let add_to_fav_btn = document.createElement("button");
@@ -321,7 +321,7 @@ async function fetch_weather() {
         add_to_fav.appendChild(add_to_fav_btn);
         weather_info.appendChild(add_to_fav);
         add_to_fav_btn.addEventListener("click", () => {
-          // city = `${data.name}, ${data.sys.country}`;
+          city = `${data.name}, ${data.sys.country}`;
           // api = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=e572668bb21fee7042efec77137cc15c`;
           console.log(`Hey you have added ${city} into your favorite list`);
           let location_table = document.querySelector("#table");

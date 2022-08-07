@@ -3,7 +3,10 @@ background: url("./img/maldives-g64c460793_1920.jpg");
 }
 
 header {
-  background-image: url("img/climate.jpeg");
+  background-image: url("img/aurora-g8c16a613f_1920.jpg") ;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 #clock{
@@ -128,6 +131,7 @@ none{
 }
 
 #table{
+  margin-left:25%;
   display: none;
 }
 
