@@ -288,6 +288,9 @@ async function fetch_weather() {
         }
 
         async function get_location() {
+          let t_body = document.querySelector("#t_body");
+          t_body.innerHTML = "";
+
           let res = await fetch(
             `http://127.0.0.1:2022/locations/${localStorage.getItem(
               "username"
@@ -305,7 +308,7 @@ async function fetch_weather() {
               city_array.push(elm[2]);
             }
             console.log(city_array);
-            let t_body = document.querySelector("#t_body");
+            // let t_body = document.querySelector("#t_body");
 
             for (let i = 0; i < city_array.length; i++) {
               api = `https://api.openweathermap.org/data/2.5/weather?q=${city_array[i]}&units=metric&appid=e572668bb21fee7042efec77137cc15c`;
@@ -314,7 +317,41 @@ async function fetch_weather() {
                 let res = await fetch(api);
                 let data = await res.json();
                 if (res.status == 200) {
-                  create_table();
+                  let t_row = document.createElement("tr");
+
+                  let fav_location = document.createElement("td");
+                  fav_location.innerText = `${data.name}, ${data.sys.country}`;
+                  t_row.appendChild(fav_location);
+
+                  let descrip = document.createElement("td");
+                  descrip.innerText = data.weather[0].description;
+                  t_row.appendChild(descrip);
+
+                  let temp = document.createElement("td");
+                  temp.innerText = `${data.main.temp}\u00B0c`;
+                  t_row.appendChild(temp);
+
+                  let feels = document.createElement("td");
+                  feels.innerText = `${data.main.feels_like}\u00B0c`;
+                  t_row.appendChild(feels);
+
+                  let min_temp = document.createElement("td");
+                  min_temp.innerText = `${data.main.temp_min}\u00B0c`;
+                  t_row.appendChild(min_temp);
+
+                  let max_temp = document.createElement("td");
+                  max_temp.innerText = `${data.main.temp_max}\u00B0c`;
+                  t_row.appendChild(max_temp);
+
+                  let humidity = document.createElement("td");
+                  humidity.innerText = `${data.main.humidity}%`;
+                  t_row.appendChild(humidity);
+
+                  let remove_fav = document.createElement("td");
+                  remove_fav.innerText = "ink";
+                  t_row.appendChild(remove_fav);
+
+                  t_body.appendChild(t_row);
                 }
               }
             }
@@ -486,46 +523,45 @@ log_out_tab.addEventListener("click", logout);
 //****************************     Logout tab event listener ******** end           *********************************/
 
 //***********************Function to create table of locations */
-function create_table() {
-  // for (let elm of arr) {
-  let t_row = document.createElement("tr");
+// function create_table() {
+//   // for (let elm of arr) {
+//   let t_row = document.createElement("tr");
 
-  let s_num = document.createElement("td");
-  s_num.innerText = "kapala";
-  t_row.appendChild(s_num);
+//   let s_num = document.createElement("td");
+//   s_num.innerText = "kapala";
+//   t_row.appendChild(s_num);
 
-  let fav_location = document.createElement("td");
-  fav_location.innerText = "ball";
-  t_row.appendChild(fav_location);
+//   let fav_location = document.createElement("td");
+//   fav_location.innerText = "ball";
+//   t_row.appendChild(fav_location);
 
-  let descrip = document.createElement("td");
-  descrip.innerText = "cat";
-  t_row.appendChild(descrip);
+//   let descrip = document.createElement("td");
+//   descrip.innerText = "cat";
+//   t_row.appendChild(descrip);
 
-  let temp = document.createElement("td");
-  temp.innerText = "dog";
-  t_row.appendChild(temp);
+//   let temp = document.createElement("td");
+//   temp.innerText = "dog";
+//   t_row.appendChild(temp);
 
-  let feels = document.createElement("td");
-  feels.innerText = "egg";
-  t_row.appendChild(feels);
+//   let feels = document.createElement("td");
+//   feels.innerText = "egg";
+//   t_row.appendChild(feels);
 
-  let min_temp = document.createElement("td");
-  min_temp.innerText = "fish";
-  t_row.appendChild(min_temp);
+//   let min_temp = document.createElement("td");
+//   min_temp.innerText = "fish";
+//   t_row.appendChild(min_temp);
 
-  let max_temp = document.createElement("td");
-  max_temp.innerText = "grass";
-  t_row.appendChild(max_temp);
+//   let max_temp = document.createElement("td");
+//   max_temp.innerText = "grass";
+//   t_row.appendChild(max_temp);
 
-  let humidity = document.createElement("td");
-  humidity.innerText = "horse";
-  t_row.appendChild(humidity);
+//   let humidity = document.createElement("td");
+//   humidity.innerText = "horse";
+//   t_row.appendChild(humidity);
 
-  let remove_fav = document.createElement("td");
-  remove_fav.innerText = "ink";
-  t_row.appendChild(remove_fav);
+//   let remove_fav = document.createElement("td");
+//   remove_fav.innerText = "ink";
+//   t_row.appendChild(remove_fav);
 
-  t_body.appendChild(t_row);
-}
+//   t_body.appendChild(t_row);
 // }
