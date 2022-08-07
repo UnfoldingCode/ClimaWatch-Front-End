@@ -11,7 +11,6 @@ let thirdcard = document.querySelector('#card3');
 let secondcolumn = document.querySelector('#card2');
 let thirdcolumn = document.querySelector('#card3');
 let api;
-let data;
 let newsApi;
 //****************************            When hit Enter            *********************************/
 inputBox.addEventListener("keyup", (e) => {
@@ -81,7 +80,6 @@ function showPosition(position) {
   api = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&appid=e572668bb21fee7042efec77137cc15c
 `;
   fetch_weather();
-  fetch_news();
 }
 //****** Using HTML Geolocation - The getCurrentPosition() method is used to return the user's position.    */
 
@@ -114,14 +112,13 @@ search_button.addEventListener("click", () => {
 
 search_button.addEventListener("click", fetch_weather);
 
-search_button.addEventListener("click", fetch_news);
 
 async function fetch_weather() {
   try {
     weather_info.innerHTML = "";
     let res = await fetch(api);
     console.log(res);
-    data = await res.json();
+    let data = await res.json();
     hideLoading();
     document.querySelector("#city").value = "";
     if (res.status == 200) {
@@ -191,16 +188,16 @@ async function fetch_weather() {
   } catch {}
 }
 
+window.addEventListener("load", fetch_news);
+
 async function fetch_news() {
   firstcolumn.innerHTML="";
   secondcolumn.innerHTML="";
   thirdcolumn.innerHTML="";
   try {
-    let re = await fetch(`https://newsdata.io/api/1/news?apikey=pub_9879923018ce89b9bb0bdf501694d53d3789&country=${data.sys.country}`);
-    console.log(re)
+    let re = await fetch(`https://newsdata.io/api/1/news?apikey=pub_9879923018ce89b9bb0bdf501694d53d3789&language=fr,en`);
     newsData = await re.json();
     if (re.status == 200) {
-      console.log(newsData.results[0])
       let Image =[];
       let Title =[];
       let Descript =[];
