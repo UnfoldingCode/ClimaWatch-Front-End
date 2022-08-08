@@ -787,6 +787,7 @@ async function fetch_news() {
   thirdcolumn.innerHTML = "";
   try {
     let re = await fetch(
+      //`https://newsdata.io/api/1/news?apikey=pub_9879923018ce89b9bb0bdf501694d53d3789&country=ca`
       `https://newsdata.io/api/1/news?apikey=pub_9879923018ce89b9bb0bdf501694d53d3789&language=en`
     );
     newsData = await re.json();
@@ -810,6 +811,7 @@ async function fetch_news() {
         console.log("No First Column Image");
       } else {
         let pictureone = document.createElement("img");
+        pictureone.setAttribute("class", "img-card");
         pictureone.setAttribute("src", `${Image[0]}`);
         firstcard.appendChild(pictureone);
       }
@@ -818,6 +820,7 @@ async function fetch_news() {
         console.log("No Second Column Image");
       } else {
         let picturetwo = document.createElement("img");
+        picturetwo.setAttribute("class", "img-card");
         picturetwo.setAttribute("src", `${Image[1]}`);
         secondcard.appendChild(picturetwo);
       }
@@ -826,6 +829,7 @@ async function fetch_news() {
         console.log("No Third Column Image");
       } else {
         let picturethree = document.createElement("img");
+        picturethree.setAttribute("class", "img-card");
         picturethree.setAttribute("src", `${Image[2]}`);
         thirdcard.appendChild(picturethree);
       }
