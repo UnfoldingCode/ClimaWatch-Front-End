@@ -54,7 +54,7 @@ window.addEventListener("load", () => {
     signinForm.reset();
     signinForm.style.display = "none";
     log_out_tab.style.display = "inline";
-    user_logged_in = localStorage.getItem("name");
+    user_logged_in = localStorage.getItem("username");
     user_info.innerHTML = `${user_logged_in}, Welcome to ClimaWatch !!! `;
   }
 
