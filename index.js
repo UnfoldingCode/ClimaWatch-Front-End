@@ -610,6 +610,7 @@ async function user_registration() {
 signin_btn_submit.addEventListener("click", (e) => {
   e.preventDefault();
   console.log("Sign Button is clicked. Users is trying to sign in");
+  console.log(signin_username_input.value);
   signin_username_input = signin_username_input.value.toLowerCase();
   signin_password_input = signin_password_input.value;
   console.log(signin_username_input, signin_password_input);
@@ -769,17 +770,13 @@ async function sign_in_by_user() {
     }
   } else {
     user_log_failed.innerHTML = "Please log in with valid credentials!!!";
-    signinForm.reset();
+
     setTimeout(() => {
       user_log_failed.innerHTML = "";
-    }, 4000);
+      // signinForm.reset();
+      window.location.href = "./index.html";
+    }, 2000);
   }
-  // let unfav_btn = document.getElementById(`#${data.name}, ${data.sys.country}`);
-
-  // unfav_btn.addEventListener("click", (e) => {
-  //   e.preventDefault();
-  //   console.log(`${data.name}, ${data.sys.country}`);
-  // });
 }
 //****************************     Function to send sign in post request to backend ******** end           *********************************/
 
