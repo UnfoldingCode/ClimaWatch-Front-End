@@ -56,6 +56,9 @@ window.addEventListener("load", () => {
     log_out_tab.style.display = "inline";
     user_logged_in = localStorage.getItem("username");
     user_info.innerHTML = `${user_logged_in}, Welcome to ClimaWatch !!! `;
+    setTimeout(() => {
+      user_info.innerHTML = `${user_logged_in}`;
+    }, 3000);
   }
 
   async function get_location() {
@@ -236,6 +239,9 @@ function showPosition(position) {
   api = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&appid=e572668bb21fee7042efec77137cc15c
 `;
   fetch_weather();
+  country = data.sys.country;
+  api_news = `https://newsdata.io/api/1/news?apikey=pub_9879923018ce89b9bb0bdf501694d53d3789&country=${country}`;
+  fetch_news_city();
 }
 //****** Using HTML Geolocation - The getCurrentPosition() method is used to return the user's position.  End   */
 
@@ -644,6 +650,9 @@ async function sign_in_by_user() {
       signinForm.style.display = "none";
       log_out_tab.style.display = "inline";
       user_info.innerHTML = `${user_logged_in}, Welcome to ClimaWatch !!! `;
+      setTimeout(() => {
+        user_info.innerHTML = `${user_logged_in}`;
+      }, 3000);
       let location_table = document.querySelector("#table");
       location_table.style.display = "block";
       get_location();
