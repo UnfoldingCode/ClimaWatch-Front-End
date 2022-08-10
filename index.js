@@ -4,6 +4,7 @@ let weather_info = document.querySelector("#weather_info");
 let inputBox = document.querySelector("#city");
 let log_out_tab = document.querySelector("#sign_out");
 let user_info = document.querySelector("#user_info");
+let user_log_failed = document.querySelector("#user_log_failed");
 let user_logged_in; // to grab the name of the user
 let api_news;
 let country;
@@ -55,7 +56,11 @@ window.addEventListener("load", () => {
     signinForm.style.display = "none";
     log_out_tab.style.display = "inline";
     user_logged_in = localStorage.getItem("username");
-    user_info.innerHTML = `${user_logged_in}, Welcome to ClimaWatch !!! `;
+    user_info.innerHTML = `${user_logged_in}`;
+    //user_info.innerHTML = `${user_logged_in}, Welcome to ClimaWatch !!! `;
+    setTimeout(() => {
+      user_info.innerHTML = `${user_logged_in}`;
+    }, 3000);
   }
 
   async function get_location() {
@@ -236,6 +241,9 @@ function showPosition(position) {
   api = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&appid=e572668bb21fee7042efec77137cc15c
 `;
   fetch_weather();
+  country = data.sys.country;
+  api_news = `https://newsdata.io/api/1/news?apikey=pub_9879923018ce89b9bb0bdf501694d53d3789&country=${country}`;
+  fetch_news_city();
 }
 //****** Using HTML Geolocation - The getCurrentPosition() method is used to return the user's position.  End   */
 
@@ -556,44 +564,50 @@ joinNow_btn_submit.addEventListener("click", (e) => {
 joinNow_btn_submit.addEventListener("click", user_registration);
 
 async function user_registration() {
-  let res = await fetch(`http://127.0.0.1:2022/users`, {
-    method: "POST",
-    credentials: "include",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      username: joinNow_username,
-      name: joinNow_name,
-      email: joinNow_email,
-      password: joinNow_password,
-    }),
-  });
-  let data = await res.text();
-  if (res.status == 200) {
-    registrationForm.style.display =
-      registrationForm.style.display == "" ? "" : "";
-    message_after_registration.style.display = "block";
-    message_after_registration.innerText = data;
-    const inputs = document.querySelectorAll(
-      "#username, #name, #email, #password"
-    );
-    inputs.forEach((input) => {
-      input.value = "";
+  try {
+    let res = await fetch(`http://127.0.0.1:2022/users`, {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username: joinNow_username,
+        name: joinNow_name,
+        email: joinNow_email,
+        password: joinNow_password,
+      }),
     });
-    console.log(data);
-  } else {
-    registrationForm.style.display =
-      registrationForm.style.display == "" ? "" : "";
+    let data = await res.text();
+    if (res.status == 200) {
+      registrationForm.style.display =
+        registrationForm.style.display == "" ? "" : "";
+      message_after_registration.style.display = "block";
+      message_after_registration.innerText = data;
+      const inputs = document.querySelectorAll(
+        "#username, #name, #email, #password"
+      );
+      inputs.forEach((input) => {
+        input.value = "";
+      });
+      console.log(data);
+    } else if (res.status == 409) {
+      registrationForm.style.display =
+        registrationForm.style.display == "" ? "" : "";
+      message_after_registration.style.display = "block";
+      message_after_registration.innerText = data;
+      const inputs = document.querySelectorAll(
+        "#username, #name, #email, #password"
+      );
+      inputs.forEach((input) => {
+        input.value = "";
+      });
+      console.log(data);
+    }
+  } catch {
     message_after_registration.style.display = "block";
-    message_after_registration.innerText = data;
-    const inputs = document.querySelectorAll(
-      "#username, #name, #email, #password"
-    );
-    inputs.forEach((input) => {
-      input.value = "";
-    });
-    console.log(data);
+    message_after_registration.innerText =
+      "Please enter all the details in the correct format!!!";
   }
 }
 //****************************      Join Now submit button   *******   end       *********************************/
@@ -602,6 +616,7 @@ async function user_registration() {
 signin_btn_submit.addEventListener("click", (e) => {
   e.preventDefault();
   console.log("Sign Button is clicked. Users is trying to sign in");
+  console.log(signin_username_input.value);
   signin_username_input = signin_username_input.value.toLowerCase();
   signin_password_input = signin_password_input.value;
   console.log(signin_username_input, signin_password_input);
@@ -627,11 +642,15 @@ async function sign_in_by_user() {
       password: signin_password_input,
     }),
   });
-  let data = await res.json();
-  let name = data["users"][0]["name"];
-  let user_name = data["users"][0]["username"];
-  console.log(`${name} logged in`);
+  // let data = await res.json();
+  let name;
+  let user_name;
+  let data;
+  // console.log(`${name} logged in`);
   if (res.status == 200) {
+    data = await res.json();
+    name = data["users"][0]["name"];
+    user_name = data["users"][0]["username"];
     localStorage.setItem("name", name);
     localStorage.setItem("username", user_name);
 
@@ -644,6 +663,9 @@ async function sign_in_by_user() {
       signinForm.style.display = "none";
       log_out_tab.style.display = "inline";
       user_info.innerHTML = `${user_logged_in}, Welcome to ClimaWatch !!! `;
+      setTimeout(() => {
+        user_info.innerHTML = `${user_logged_in}`;
+      }, 3000);
       let location_table = document.querySelector("#table");
       location_table.style.display = "block";
       get_location();
@@ -752,13 +774,15 @@ async function sign_in_by_user() {
         }
       }
     }
-  }
-  // let unfav_btn = document.getElementById(`#${data.name}, ${data.sys.country}`);
+  } else {
+    user_log_failed.innerHTML = "Please log in with valid credentials!!!";
 
-  // unfav_btn.addEventListener("click", (e) => {
-  //   e.preventDefault();
-  //   console.log(`${data.name}, ${data.sys.country}`);
-  // });
+    setTimeout(() => {
+      user_log_failed.innerHTML = "";
+      // signinForm.reset();
+      window.location.href = "./index.html";
+    }, 2000);
+  }
 }
 //****************************     Function to send sign in post request to backend ******** end           *********************************/
 
