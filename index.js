@@ -4,6 +4,7 @@ let weather_info = document.querySelector("#weather_info");
 let inputBox = document.querySelector("#city");
 let log_out_tab = document.querySelector("#sign_out");
 let user_info = document.querySelector("#user_info");
+let user_log_failed = document.querySelector("#user_log_failed");
 let user_logged_in; // to grab the name of the user
 let api_news;
 let country;
@@ -634,11 +635,15 @@ async function sign_in_by_user() {
       password: signin_password_input,
     }),
   });
-  let data = await res.json();
-  let name = data["users"][0]["name"];
-  let user_name = data["users"][0]["username"];
-  console.log(`${name} logged in`);
+  // let data = await res.json();
+  let name;
+  let user_name;
+  let data;
+  // console.log(`${name} logged in`);
   if (res.status == 200) {
+    data = await res.json();
+    name = data["users"][0]["name"];
+    user_name = data["users"][0]["username"];
     localStorage.setItem("name", name);
     localStorage.setItem("username", user_name);
 
@@ -762,6 +767,12 @@ async function sign_in_by_user() {
         }
       }
     }
+  } else {
+    user_log_failed.innerHTML = "Please log in with valid credentials!!!";
+    signinForm.reset();
+    setTimeout(() => {
+      user_log_failed.innerHTML = "";
+    }, 4000);
   }
   // let unfav_btn = document.getElementById(`#${data.name}, ${data.sys.country}`);
 
