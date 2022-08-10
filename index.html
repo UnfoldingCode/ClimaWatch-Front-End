@@ -16,13 +16,12 @@
     <header>
       <nav class="navbar bg-transparent">
         <div class="container">
-          <a class="navbar-brand" href="#">
+          <a class="navbar-brand" href="/index.html">
             <img src="/img/cyclone.png" alt="" width="50" height="44">
             ClimaWatch
           </a><div id = "clock" onload="currentTime()"></div>
           <ul class="nav">
             <li class="nav-item">
-              <a class="twentypx" href="./index.html"><u>Refresh</u></a>
             </li>
             <li class="nav-item">
               <a id="join_now" class="twentypx"><u>Join Now</u></a>
@@ -41,19 +40,17 @@
       <div>
         <p id="message_after_registration"></p>
         <form id="registartion_form">
-          <input type="text" id="username"><br>
-          <input type="text" id="name"><br>
-          <input type="email" id="email"><br>
-          <input type="password" id="password"><br>
+          <input type="text" id="username" placeholder="Username"><br>
+          <input type="text" id="name" placeholder="Name"><br>
+          <input type="email" id="email" placeholder="Email"><br>
+          <input type="password" id="password" placeholder="Password"><br>
           <button type="button" id="registration_btn">Join Now</button>
         </form>
       </div>
       <div>
         <form id="signin_form">
-          <label for="user_name">Username</label>
-          <input type="text" id="user_name">
-          <label for="user_password">Password</label>
-          <input type="password" id="user_password">
+          <input type="text" id="user_name" placeholder="Username">
+          <input type="password" id="user_password" placeholder="Password">
           <button type="button" id="signin_btn">Sign in</button>
         </form>
       </div>
