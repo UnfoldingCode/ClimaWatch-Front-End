@@ -564,44 +564,50 @@ joinNow_btn_submit.addEventListener("click", (e) => {
 joinNow_btn_submit.addEventListener("click", user_registration);
 
 async function user_registration() {
-  let res = await fetch(`http://127.0.0.1:2022/users`, {
-    method: "POST",
-    credentials: "include",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      username: joinNow_username,
-      name: joinNow_name,
-      email: joinNow_email,
-      password: joinNow_password,
-    }),
-  });
-  let data = await res.text();
-  if (res.status == 200) {
-    registrationForm.style.display =
-      registrationForm.style.display == "" ? "" : "";
-    message_after_registration.style.display = "block";
-    message_after_registration.innerText = data;
-    const inputs = document.querySelectorAll(
-      "#username, #name, #email, #password"
-    );
-    inputs.forEach((input) => {
-      input.value = "";
+  try {
+    let res = await fetch(`http://127.0.0.1:2022/users`, {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username: joinNow_username,
+        name: joinNow_name,
+        email: joinNow_email,
+        password: joinNow_password,
+      }),
     });
-    console.log(data);
-  } else {
-    registrationForm.style.display =
-      registrationForm.style.display == "" ? "" : "";
+    let data = await res.text();
+    if (res.status == 200) {
+      registrationForm.style.display =
+        registrationForm.style.display == "" ? "" : "";
+      message_after_registration.style.display = "block";
+      message_after_registration.innerText = data;
+      const inputs = document.querySelectorAll(
+        "#username, #name, #email, #password"
+      );
+      inputs.forEach((input) => {
+        input.value = "";
+      });
+      console.log(data);
+    } else if (res.status == 409) {
+      registrationForm.style.display =
+        registrationForm.style.display == "" ? "" : "";
+      message_after_registration.style.display = "block";
+      message_after_registration.innerText = data;
+      const inputs = document.querySelectorAll(
+        "#username, #name, #email, #password"
+      );
+      inputs.forEach((input) => {
+        input.value = "";
+      });
+      console.log(data);
+    }
+  } catch {
     message_after_registration.style.display = "block";
-    message_after_registration.innerText = data;
-    const inputs = document.querySelectorAll(
-      "#username, #name, #email, #password"
-    );
-    inputs.forEach((input) => {
-      input.value = "";
-    });
-    console.log(data);
+    message_after_registration.innerText =
+      "Please enter all the details in the correct format!!!";
   }
 }
 //****************************      Join Now submit button   *******   end       *********************************/
