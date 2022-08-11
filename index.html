@@ -54,21 +54,12 @@
           <button type="button" id="signin_btn">Sign in</button>
         </form>
       </div>
-      <!-- <div>
-        <span
-          ><img src="/img/iris-303340__480.webp" width="100" height="100" />
-        </span>
-      </div>
-      <div id = "clock" onload="currentTime()"></div>
-      <div>
-        <p ><h1 class="twentypx">ClimaWatch</h1></p>
-      </div> -->
       <div>
         <form>
           <label for="city" class="twentypx">Location:</label>
-          <input id="city" type="text" placeholder="Enter city name"/>
-          <button type="button" id="search_button"><i class="bi bi-search"></i></button>
-          <button type="button" id="my_location">Use Current Location</button>
+          <input id="city" class= "search" type="text" placeholder="Enter City Name..."/>
+          <button type="button" class="btn-search" id="search_button"><i class="bi bi-search"></i></button>
+          <button type="button" class="btn-current" id="my_location">Current Location <i class="bi bi-geo-alt-fill"></i></button>
         </div>
         </form>
       </div> -->
@@ -76,7 +67,7 @@
     <div id="loading" ></div> 
     <main id="main"><div id="weather_info"></div>
 <!-- ----------------------------------------------------Table for favorite locations ----------------------------- -->
-<div id="table" class="table table-success table-striped">
+<div id="table" class="table table-dark table-striped">
   <table>
     <thead>
       <tr>
@@ -99,9 +90,9 @@
     <section class="wrapper">
     <div class="container-fostrap">
         <div>
-            <h1 class="heading">
+            <h2 class="heading">
                Current News 
-            </h1>
+            </h2>
         </div>
         <div class="content">
         <div class="container">
@@ -129,7 +120,7 @@
 
     </main>
 <!-- --------------------------------Footer ------------------------- -->
-    <footer class="bg-white">
+    <footer>
     <div class="container py-5">
       <div class="row py-3">
 

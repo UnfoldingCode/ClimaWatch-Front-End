@@ -43,10 +43,8 @@ header {
 
 
 #weather_info {
-  margin-top: 50px;
-  margin-bottom: 50px;
-  margin-right: 15%;
-  margin-left: 15%;
+  margin: auto;
+  padding: 10px;
 }
 
 .twentypx {
@@ -127,16 +125,20 @@ none {
 #city_not_found {
   text-align: center;
   color: red;
-  background-image: url("img/maldives-g64c460793_1920.jpg");
+  margin-top: 50px;
+  margin-bottom: 50px;
+  font-size: larger;
 }
+
 
 #sign_out {
   display: none;
 }
 
 #table {
-  margin-left: 15%;
-  display: none;
+  margin: auto;
+  width: 50%;
+  padding: 10px;
 }
 
 /******************************************************* News Section *****************************************************/
@@ -254,4 +256,32 @@ h1.heading {
   padding: 10px;
   font-weight: 600;
   text-transform: uppercase
+}
+.btn-search {
+	background: linear-gradient(rgb(57, 57, 231), rgb(92, 166, 230)) ;
+    color: #fff;
+    border-radius:0;
+    border-color:rgb(49, 49, 49);
+}
+.input-search {
+	border-radius:0;
+    background-color: #eee;
+    box-shadow: none;
+    border: none;
+  	border-right: 1px solid #eee;
+}
+
+.input-search:focus {
+	box-shadow: none;
+}
+
+.btn-current{
+  background: linear-gradient(rgb(57, 57, 231), rgb(92, 166, 230)) ;
+    color: #fff;
+    border-radius:0;
+    border-color:rgb(49, 49, 49);
+}
+
+footer{
+  background: rgb(182, 180, 180);
 }
