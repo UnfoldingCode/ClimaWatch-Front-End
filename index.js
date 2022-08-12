@@ -133,7 +133,7 @@ window.addEventListener("load", () => {
               e.preventDefault();
               console.log(`${data.name}, ${data.sys.country}`);
               let res = await fetch(
-                `http://127.0.0.1:2022/locations/${localStorage.getItem(
+                `http://ec2-18-116-115-64.us-east-2.compute.amazonaws.com:8080/locations/${localStorage.getItem(
                   "username"
                 )}`,
                 {
@@ -385,7 +385,7 @@ async function fetch_weather() {
 
         async function add_location() {
           let res = await fetch(
-            `http://127.0.0.1:2022/locations/${localStorage.getItem(
+            `http://ec2-18-116-115-64.us-east-2.compute.amazonaws.com:8080/locations/${localStorage.getItem(
               "username"
             )}`,
             {
@@ -414,7 +414,7 @@ async function fetch_weather() {
           t_body.innerHTML = "";
 
           let res = await fetch(
-            `http://127.0.0.1:2022/locations/${localStorage.getItem(
+            `http://ec2-18-116-115-64.us-east-2.compute.amazonaws.com:8080/locations/${localStorage.getItem(
               "username"
             )}`,
             {
@@ -484,7 +484,7 @@ async function fetch_weather() {
                     e.preventDefault();
                     console.log(`${data.name}, ${data.sys.country}`);
                     let res = await fetch(
-                      `http://127.0.0.1:2022/locations/${localStorage.getItem(
+                      `http://ec2-18-116-115-64.us-east-2.compute.amazonaws.com:8080/locations/${localStorage.getItem(
                         "username"
                       )}`,
                       {
@@ -565,19 +565,22 @@ joinNow_btn_submit.addEventListener("click", user_registration);
 
 async function user_registration() {
   try {
-    let res = await fetch(`http://127.0.0.1:2022/users`, {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username: joinNow_username,
-        name: joinNow_name,
-        email: joinNow_email,
-        password: joinNow_password,
-      }),
-    });
+    let res = await fetch(
+      `http://ec2-18-116-115-64.us-east-2.compute.amazonaws.com:8080/users`,
+      {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: joinNow_username,
+          name: joinNow_name,
+          email: joinNow_email,
+          password: joinNow_password,
+        }),
+      }
+    );
     let data = await res.text();
     if (res.status == 200) {
       registrationForm.style.display =
@@ -631,17 +634,20 @@ signin_btn_submit.addEventListener("click", sign_in_by_user);
 
 //****************************     Function to send sign in post request to backend ******** start           *********************************/
 async function sign_in_by_user() {
-  let res = await fetch(`http://127.0.0.1:2022/login`, {
-    method: "POST",
-    credentials: "include",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      username: signin_username_input,
-      password: signin_password_input,
-    }),
-  });
+  let res = await fetch(
+    `http://ec2-18-116-115-64.us-east-2.compute.amazonaws.com:8080/login`,
+    {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username: signin_username_input,
+        password: signin_password_input,
+      }),
+    }
+  );
   // let data = await res.json();
   let name;
   let user_name;
@@ -674,7 +680,9 @@ async function sign_in_by_user() {
         t_body.innerHTML = "";
 
         let res = await fetch(
-          `http://127.0.0.1:2022/locations/${localStorage.getItem("username")}`,
+          `http://ec2-18-116-115-64.us-east-2.compute.amazonaws.com:8080/locations/${localStorage.getItem(
+            "username"
+          )}`,
           {
             credentials: "include",
             method: "GET",
@@ -742,7 +750,7 @@ async function sign_in_by_user() {
                   e.preventDefault();
                   console.log(`${data.name}, ${data.sys.country}`);
                   let res = await fetch(
-                    `http://127.0.0.1:2022/locations/${localStorage.getItem(
+                    `http://ec2-18-116-115-64.us-east-2.compute.amazonaws.com:8080/locations/${localStorage.getItem(
                       "username"
                     )}`,
                     {
@@ -789,9 +797,12 @@ async function sign_in_by_user() {
 //****************************     Function to send logout request to backend ******** start           *********************************/
 
 async function logout() {
-  let res = await fetch(`http://127.0.0.1:2022/logout`, {
-    method: "POST",
-  });
+  let res = await fetch(
+    `http://ec2-18-116-115-64.us-east-2.compute.amazonaws.com:8080/logout`,
+    {
+      method: "POST",
+    }
+  );
   let data = await res.json();
   let message = data["message"];
   if (res.status == 200) {
