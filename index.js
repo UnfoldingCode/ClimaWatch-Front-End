@@ -4,6 +4,7 @@ let weather_info = document.querySelector("#weather_info");
 let inputBox = document.querySelector("#city");
 let log_out_tab = document.querySelector("#sign_out");
 let user_info = document.querySelector("#user_info");
+let user_log_failed = document.querySelector("#user_log_failed");
 let user_logged_in; // to grab the name of the user
 let api_news;
 let country;
@@ -54,8 +55,12 @@ window.addEventListener("load", () => {
     signinForm.reset();
     signinForm.style.display = "none";
     log_out_tab.style.display = "inline";
-    user_logged_in = localStorage.getItem("name");
-    user_info.innerHTML = `${user_logged_in}, Welcome to ClimaWatch !!! `;
+    user_logged_in = localStorage.getItem("username");
+    user_info.innerHTML = `${user_logged_in}`;
+    //user_info.innerHTML = `${user_logged_in}, Welcome to ClimaWatch !!! `;
+    setTimeout(() => {
+      user_info.innerHTML = `${user_logged_in}`;
+    }, 3000);
   }
 
   async function get_location() {
@@ -128,7 +133,7 @@ window.addEventListener("load", () => {
               e.preventDefault();
               console.log(`${data.name}, ${data.sys.country}`);
               let res = await fetch(
-                `http://127.0.0.1:2022/locations/${localStorage.getItem(
+                `http://ec2-18-116-115-64.us-east-2.compute.amazonaws.com:8080/locations/${localStorage.getItem(
                   "username"
                 )}`,
                 {
@@ -236,6 +241,9 @@ function showPosition(position) {
   api = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&appid=e572668bb21fee7042efec77137cc15c
 `;
   fetch_weather();
+  country = data.sys.country;
+  api_news = `https://newsdata.io/api/1/news?apikey=pub_9879923018ce89b9bb0bdf501694d53d3789&country=${country}`;
+  fetch_news_city();
 }
 //****** Using HTML Geolocation - The getCurrentPosition() method is used to return the user's position.  End   */
 
@@ -377,7 +385,7 @@ async function fetch_weather() {
 
         async function add_location() {
           let res = await fetch(
-            `http://127.0.0.1:2022/locations/${localStorage.getItem(
+            `http://ec2-18-116-115-64.us-east-2.compute.amazonaws.com:8080/locations/${localStorage.getItem(
               "username"
             )}`,
             {
@@ -406,7 +414,7 @@ async function fetch_weather() {
           t_body.innerHTML = "";
 
           let res = await fetch(
-            `http://127.0.0.1:2022/locations/${localStorage.getItem(
+            `http://ec2-18-116-115-64.us-east-2.compute.amazonaws.com:8080/locations/${localStorage.getItem(
               "username"
             )}`,
             {
@@ -476,7 +484,7 @@ async function fetch_weather() {
                     e.preventDefault();
                     console.log(`${data.name}, ${data.sys.country}`);
                     let res = await fetch(
-                      `http://127.0.0.1:2022/locations/${localStorage.getItem(
+                      `http://ec2-18-116-115-64.us-east-2.compute.amazonaws.com:8080/locations/${localStorage.getItem(
                         "username"
                       )}`,
                       {
@@ -556,44 +564,53 @@ joinNow_btn_submit.addEventListener("click", (e) => {
 joinNow_btn_submit.addEventListener("click", user_registration);
 
 async function user_registration() {
-  let res = await fetch(`http://127.0.0.1:2022/users`, {
-    method: "POST",
-    credentials: "include",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      username: joinNow_username,
-      name: joinNow_name,
-      email: joinNow_email,
-      password: joinNow_password,
-    }),
-  });
-  let data = await res.text();
-  if (res.status == 200) {
-    registrationForm.style.display =
-      registrationForm.style.display == "" ? "" : "";
-    message_after_registration.style.display = "block";
-    message_after_registration.innerText = data;
-    const inputs = document.querySelectorAll(
-      "#username, #name, #email, #password"
+  try {
+    let res = await fetch(
+      `http://ec2-18-116-115-64.us-east-2.compute.amazonaws.com:8080/users`,
+      {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: joinNow_username,
+          name: joinNow_name,
+          email: joinNow_email,
+          password: joinNow_password,
+        }),
+      }
     );
-    inputs.forEach((input) => {
-      input.value = "";
-    });
-    console.log(data);
-  } else {
-    registrationForm.style.display =
-      registrationForm.style.display == "" ? "" : "";
+    let data = await res.text();
+    if (res.status == 200) {
+      registrationForm.style.display =
+        registrationForm.style.display == "" ? "" : "";
+      message_after_registration.style.display = "block";
+      message_after_registration.innerText = data;
+      const inputs = document.querySelectorAll(
+        "#username, #name, #email, #password"
+      );
+      inputs.forEach((input) => {
+        input.value = "";
+      });
+      console.log(data);
+    } else if (res.status == 409) {
+      registrationForm.style.display =
+        registrationForm.style.display == "" ? "" : "";
+      message_after_registration.style.display = "block";
+      message_after_registration.innerText = data;
+      const inputs = document.querySelectorAll(
+        "#username, #name, #email, #password"
+      );
+      inputs.forEach((input) => {
+        input.value = "";
+      });
+      console.log(data);
+    }
+  } catch {
     message_after_registration.style.display = "block";
-    message_after_registration.innerText = data;
-    const inputs = document.querySelectorAll(
-      "#username, #name, #email, #password"
-    );
-    inputs.forEach((input) => {
-      input.value = "";
-    });
-    console.log(data);
+    message_after_registration.innerText =
+      "Please enter all the details in the correct format!!!";
   }
 }
 //****************************      Join Now submit button   *******   end       *********************************/
@@ -602,6 +619,7 @@ async function user_registration() {
 signin_btn_submit.addEventListener("click", (e) => {
   e.preventDefault();
   console.log("Sign Button is clicked. Users is trying to sign in");
+  console.log(signin_username_input.value);
   signin_username_input = signin_username_input.value.toLowerCase();
   signin_password_input = signin_password_input.value;
   console.log(signin_username_input, signin_password_input);
@@ -616,22 +634,29 @@ signin_btn_submit.addEventListener("click", sign_in_by_user);
 
 //****************************     Function to send sign in post request to backend ******** start           *********************************/
 async function sign_in_by_user() {
-  let res = await fetch(`http://127.0.0.1:2022/login`, {
-    method: "POST",
-    credentials: "include",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      username: signin_username_input,
-      password: signin_password_input,
-    }),
-  });
-  let data = await res.json();
-  let name = data["users"][0]["name"];
-  let user_name = data["users"][0]["username"];
-  console.log(`${name} logged in`);
+  let res = await fetch(
+    `http://ec2-18-116-115-64.us-east-2.compute.amazonaws.com:8080/login`,
+    {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username: signin_username_input,
+        password: signin_password_input,
+      }),
+    }
+  );
+  // let data = await res.json();
+  let name;
+  let user_name;
+  let data;
+  // console.log(`${name} logged in`);
   if (res.status == 200) {
+    data = await res.json();
+    name = data["users"][0]["name"];
+    user_name = data["users"][0]["username"];
     localStorage.setItem("name", name);
     localStorage.setItem("username", user_name);
 
@@ -644,6 +669,9 @@ async function sign_in_by_user() {
       signinForm.style.display = "none";
       log_out_tab.style.display = "inline";
       user_info.innerHTML = `${user_logged_in}, Welcome to ClimaWatch !!! `;
+      setTimeout(() => {
+        user_info.innerHTML = `${user_logged_in}`;
+      }, 3000);
       let location_table = document.querySelector("#table");
       location_table.style.display = "block";
       get_location();
@@ -652,7 +680,9 @@ async function sign_in_by_user() {
         t_body.innerHTML = "";
 
         let res = await fetch(
-          `http://127.0.0.1:2022/locations/${localStorage.getItem("username")}`,
+          `http://ec2-18-116-115-64.us-east-2.compute.amazonaws.com:8080/locations/${localStorage.getItem(
+            "username"
+          )}`,
           {
             credentials: "include",
             method: "GET",
@@ -720,7 +750,7 @@ async function sign_in_by_user() {
                   e.preventDefault();
                   console.log(`${data.name}, ${data.sys.country}`);
                   let res = await fetch(
-                    `http://127.0.0.1:2022/locations/${localStorage.getItem(
+                    `http://ec2-18-116-115-64.us-east-2.compute.amazonaws.com:8080/locations/${localStorage.getItem(
                       "username"
                     )}`,
                     {
@@ -752,22 +782,27 @@ async function sign_in_by_user() {
         }
       }
     }
-  }
-  // let unfav_btn = document.getElementById(`#${data.name}, ${data.sys.country}`);
+  } else {
+    user_log_failed.innerHTML = "Please log in with valid credentials!!!";
 
-  // unfav_btn.addEventListener("click", (e) => {
-  //   e.preventDefault();
-  //   console.log(`${data.name}, ${data.sys.country}`);
-  // });
+    setTimeout(() => {
+      user_log_failed.innerHTML = "";
+      // signinForm.reset();
+      window.location.href = "./index.html";
+    }, 2000);
+  }
 }
 //****************************     Function to send sign in post request to backend ******** end           *********************************/
 
 //****************************     Function to send logout request to backend ******** start           *********************************/
 
 async function logout() {
-  let res = await fetch(`http://127.0.0.1:2022/logout`, {
-    method: "POST",
-  });
+  let res = await fetch(
+    `http://ec2-18-116-115-64.us-east-2.compute.amazonaws.com:8080/logout`,
+    {
+      method: "POST",
+    }
+  );
   let data = await res.json();
   let message = data["message"];
   if (res.status == 200) {
